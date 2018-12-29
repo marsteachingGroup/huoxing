@@ -1,0 +1,66 @@
+html {
+    font-size: 14px;
+    font-family: Microsoft YaHei;
+}
+
+body,
+p,
+ul,
+ol,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h5 {
+    font-weight: normal;
+}
+
+li,
+ul {
+    padding: 0
+}
+
+li {
+    list-style: none inside none;
+}
+
+a,
+label,
+div,
+span,
+li,
+i {
+    &:focus {
+        outline: none;
+    }
+}
+
+a {
+    text-decoration: none;
+}
+
+i {
+    font-style: normal;
+}
+
+input,
+textarea,
+button,
+select {
+    font-family: Microsoft YaHei;
+}
+
+input,
+textarea {
+    appearance: none;
+}

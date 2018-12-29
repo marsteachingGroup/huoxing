@@ -1,0 +1,35 @@
+.config {
+    background-color: #eeeef6;
+    height: 100vh;
+    &-header {
+        text-align: center;
+        padding-top: 20px;
+        margin-bottom: 145px;
+        &_img {
+            width: 62.5px;
+            height: 62.5px;
+            margin-bottom: 10px;
+        }
+        &_word {
+            font-size: 14px;
+            color: #333333;
+        }
+    }
+    &-content {
+        background-color: #fff;
+        height: 300px;
+        width: 305px;
+        margin: 0 auto;
+        position: relative;
+        &::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-bottom: 90px solid #fff;
+            border-left: 305px solid transparent;
+            top: -90px;
+            right: 0;
+        }
+    }
+}

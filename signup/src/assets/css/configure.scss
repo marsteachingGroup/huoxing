@@ -1,6 +1,6 @@
 .config {
     background-color: #eeeef6;
-    height: 100vh;
+    min-height: 100vh;
     &-header {
         text-align: center;
         padding-top: 20px;
@@ -17,9 +17,9 @@
     }
     &-content {
         background-color: #fff;
-        height: 300px;
         width: 305px;
         padding-top: 30px;
+        padding-bottom: 70px;
         margin: 0 auto;
         position: relative;
         &::after {
@@ -77,8 +77,8 @@
         }
         &_inner {
             border: 1px solid #bfcbd9;
-            width: 18px;
-            height: 18px;
+            width: 15px;
+            height: 15px;
             border-radius: 50%;
             background-color: #fff;
             position: relative;
@@ -99,7 +99,7 @@
                 content: "";
                 position: absolute;
                 left: calc(50% - 3px);
-                top: calc(50% - 3px);
+                top: calc(50% - 3.3px);
                 z-index: 2;
             }
         }
@@ -122,6 +122,42 @@
         &_qrcode {
             color: #ff0101;
             font-size: 13px;
+        }
+        &_button {
+            background-color: #ff0101;
+            color: #fff;
+            width: 160px;
+            text-align: center;
+            height: 46px;
+            line-height: 46px;
+            position: absolute;
+            bottom: -23px;
+            border-radius: 30px;
+            right: 80px;
+            a {
+                color: #fff;
+            }
+        }
+        &_step {
+            margin-top: 40px;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+        &_circular {
+            width: 7px;
+            height: 7px;
+            border-radius: 10px;
+            border: 1px solid #313131;
+            display: inline-block;
+            margin: 0 2px;
+        }
+        &_current {
+            background-color: #313131;
+        }
+        &_right {
+            width: 6px;
+            float: right;
+            margin-top: 5px;
         }
     }
 }

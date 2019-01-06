@@ -45,7 +45,7 @@
 				</div>
 				<span class="config-content_word">验证码</span>
 				<div class="config-content_content">
-					<input type="text" class="config-content_text">
+					<input type="text" class="config-content_text" style="width: 77px;">
 				</div>
 				<span class="config-content_qrcode">获取验证码</span>
 			</div>
@@ -59,6 +59,15 @@
 					<input type="text" class="config-content_text">
 				</div>
 			</div>
+
+			<div class="config-content_button"><a class="home-button" href="#/school">下一步</a></div>
+		</div>
+
+		<div class="config-content_step">
+		  <div class="config-content_circular config-content_current"></div>
+		  <div class="config-content_circular"></div>
+		  <div class="config-content_circular"></div>
+		  <div class="config-content_circular"></div>
 		</div>
   </div>
 </template>

@@ -35,7 +35,7 @@
 				</div>
 				<span class="config-content_word">个人手机</span>
 				<div class="config-content_content">
-					<input type="text" class="config-content_text">
+					<input v-model="phone" maxlength="13" type="text" class="config-content_text">
 				</div>
 			</div>
 
@@ -45,9 +45,10 @@
 				</div>
 				<span class="config-content_word">验证码</span>
 				<div class="config-content_content">
-					<input type="text" class="config-content_text" style="width: 77px;">
+					<input v-model="code" maxlength="6" type="text" class="config-content_text" style="width: 77px;">
 				</div>
-				<span class="config-content_qrcode">获取验证码</span>
+				<span class="config-content_qrcode" @click="handleCode" v-if="timeBol">获取验证码</span>
+				<span class="config-content_qrcode" v-else>{{time}}秒后再获取</span>
 			</div>
 
 			<div class="config-content_item jfk-flex">
@@ -56,11 +57,11 @@
 				</div>
 				<span class="config-content_word">常用邮箱</span>
 				<div class="config-content_content">
-					<input type="text" class="config-content_text">
+					<input v-model="email" type="text" class="config-content_text">
 				</div>
 			</div>
 
-			<div class="config-content_button"><a class="home-button" href="#/school">下一步</a></div>
+			<div class="config-content_button"><div @click="handleNext" class="home-button" >下一步</div></div>
 		</div>
 
 		<div class="config-content_step">
@@ -73,11 +74,85 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import { UPDATE_FORM } from '../store/mutation-types'
 export default {
+	name: 'basic',
 	data () {
 	  return {
-		member: '1'
+			member: '',
+			phone: '',
+			code: '',
+			email: '',
+			time: 60,
+			timeBol: true
 	  }
+	},
+	created () {
+		if (!this.loaded) {
+			this.$router.push('/')
+		} else {
+			this.member = this.form.member
+			this.phone = this.form.phone
+			this.code = this.form.code
+			this.email = this.form.email
+		}
+	},
+	methods: {
+		...mapActions({
+			updateForm: UPDATE_FORM
+		}),
+		handleNext () {
+			if (this.member === '') {
+				alert('请选择参赛身份')
+			} else if (this.phone === '') {
+				alert('请填写个人手机')
+			} else if (this.code === '') {
+				alert('请填写验证码')
+			} else if (this.email === '') {
+				alert('请填写个人邮箱')
+			} else {
+				this.updateForm({
+					key: 'member',
+					value: this.member
+				})
+				this.updateForm({
+					key: 'phone',
+					value: this.phone
+				})
+				this.updateForm({
+					key: 'code',
+					value: this.code
+				})
+				this.updateForm({
+					key: 'email',
+					value: this.email
+				})
+				this.$router.push('/school')
+			}
+		},
+		handleCode () {
+			alert('验证码已发送，请注意查收')
+			this.timeBol = false
+			this.handleTime()
+		},
+		handleTime () {
+			setTimeout(() => {
+				if (!this.timeBol && this.time > 1) {
+					this.time--
+					this.handleTime()
+				} else {
+					this.timeBol = true
+					this.time = 60
+				}
+			}, 1000)
+		}
+	},
+	computed: {
+		...mapGetters([
+			'loaded',
+			'form'
+		])
 	}
 }
 </script>

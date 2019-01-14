@@ -4,12 +4,34 @@
 	  <img class="home-header_img" src="../assets/images/logo.png" alt="">
 	  <div class="home-header_word">HUO XING SHI JIAN</div>
 	</div>
-	<a class="home-button" href="#/basic">报名</a>
+	<div class="home-button" @click="handleStart">报名</div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import { UPDATE_KEY } from '../store/mutation-types'
 export default {
+	name: 'index',
+	created () {
+	},
+	methods: {
+		...mapActions({
+			updateKey: UPDATE_KEY,
+		}),
+		handleStart () {
+			this.updateKey({
+				key: 'loaded',
+				value: true
+			})
+			this.$router.push('/basic')
+		}
+	},
+	computed: {
+		...mapGetters([
+			'loaded'
+		])
+	}
 }
 </script>
 <style lang="scss" scoped>

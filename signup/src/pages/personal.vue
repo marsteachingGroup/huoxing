@@ -176,7 +176,7 @@ export default {
 					this.updateKey({
 						key: 'form',
 						value: {
-							member: '',
+							role_type: '',
 							phone: '',
 							code: '',
 							email: '',

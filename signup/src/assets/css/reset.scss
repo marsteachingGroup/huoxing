@@ -64,3 +64,14 @@ input,
 textarea {
     appearance: none;
 }
+
+a,
+button,
+input,
+select,
+textarea {
+    border: none;
+    resize: none;
+    background: none;
+    -webkit-appearance: none;
+}

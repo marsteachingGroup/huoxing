@@ -62,7 +62,7 @@
 				</div>
 				<span class="config-content_word">入学年月</span>
 				<div class="config-content_content">
-					<input type="month" v-model="entrance_date" class="config-content_text">
+					<input type="month" v-model="entrance_date" class="config-content_text" style="height: 13px;margin-top: 4px;">
 					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
 				</div>
 			</div>

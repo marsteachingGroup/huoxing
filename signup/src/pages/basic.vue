@@ -16,15 +16,17 @@
 				<div class="config-content_radio">
 					<label class="config-content_label">
 						<div class="config-content_input">
-							<span class="config-content_inner" :class="{'config-content_active': member === '1'}"></span>
+							<span class="config-content_inner" :class="{'config-content_active': role_type === '2'}"></span>
+							<span>队长</span>
 						</div>
-						<input v-model="member" type="radio" value="1"/><span>队长</span>
+						<input v-model="role_type" type="radio" value="2"/>
 					</label> 
 					<label class="config-content_label">
 						<div class="config-content_input">
-						  <span class="config-content_inner" :class="{'config-content_active': member === '2'}"></span>
+						  <span class="config-content_inner" :class="{'config-content_active': role_type === '1'}"></span>
+						  <span>队员</span>
 						</div>
-						<input v-model="member" type="radio" value="2" /><span>队员</span>
+						<input v-model="role_type" type="radio" value="1" />
 					</label> 
 				</div>
 			</div>
@@ -80,7 +82,7 @@ export default {
 	name: 'basic',
 	data () {
 	  return {
-			member: '',
+			role_type: '',
 			phone: '',
 			code: '',
 			email: '',
@@ -92,7 +94,7 @@ export default {
 		if (!this.loaded) {
 			this.$router.push('/')
 		} else {
-			this.member = this.form.member
+			this.role_type = this.form.role_type
 			this.phone = this.form.phone
 			this.code = this.form.code
 			this.email = this.form.email
@@ -103,7 +105,7 @@ export default {
 			updateForm: UPDATE_FORM
 		}),
 		handleNext () {
-			if (this.member === '') {
+			if (this.role_type === '') {
 				alert('请选择参赛身份')
 			} else if (this.phone === '') {
 				alert('请填写个人手机')
@@ -111,8 +113,8 @@ export default {
 				alert('请填写个人邮箱')
 			} else {
 				this.updateForm({
-					key: 'member',
-					value: this.member
+					key: 'role_type',
+					value: this.role_type
 				})
 				this.updateForm({
 					key: 'phone',

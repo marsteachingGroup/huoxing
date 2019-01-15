@@ -2,7 +2,7 @@ export default {
   loaded: false,
   info: '',
   form: {
-    member: '',
+    role_type: '',
     phone: '',
     code: '',
     email: '',

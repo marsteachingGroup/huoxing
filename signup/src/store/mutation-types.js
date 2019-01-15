@@ -3,3 +3,5 @@ export const GET_UPDATE_KEY = 'GET_UPDATE_KEY'
 
 export const UPDATE_FORM = 'UPDATE_FORM'
 export const GET_UPDATE_FORM = 'GET_UPDATE_FORM'
+
+export const UPDATE_INFO = 'UPDATE_INFO'

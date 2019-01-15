@@ -35,11 +35,11 @@
 				</div>
 				<span class="config-content_word">个人手机</span>
 				<div class="config-content_content">
-					<input v-model="phone" maxlength="13" type="text" class="config-content_text">
+					<input v-model="phone" maxlength="13" type="number" class="config-content_text">
 				</div>
 			</div>
 
-			<div class="config-content_item jfk-flex">
+			<!-- <div class="config-content_item jfk-flex">
 				<div class="config-content_left">
 				  <img class="config-content_icon" src="../assets/images/icon/3.png" alt="">
 				</div>
@@ -49,7 +49,7 @@
 				</div>
 				<span class="config-content_qrcode" @click="handleCode" v-if="timeBol">获取验证码</span>
 				<span class="config-content_qrcode" v-else>{{time}}秒后再获取</span>
-			</div>
+			</div> -->
 
 			<div class="config-content_item jfk-flex">
 				<div class="config-content_left">
@@ -107,8 +107,6 @@ export default {
 				alert('请选择参赛身份')
 			} else if (this.phone === '') {
 				alert('请填写个人手机')
-			} else if (this.code === '') {
-				alert('请填写验证码')
 			} else if (this.email === '') {
 				alert('请填写个人邮箱')
 			} else {

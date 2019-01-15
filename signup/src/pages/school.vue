@@ -15,6 +15,9 @@
 				</div>
 				<span class="config-content_word">学校名称</span>
 				<div class="config-content_content">
+					<select v-model="school" class="config-content_text">                                        
+						<option v-for="(value, key) in info.school" :value="value">{{value.school_name}}</option>             
+					</select>
 					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
 				</div>
 			</div>
@@ -26,7 +29,7 @@
 				</div>
 				<span class="config-content_word">院系名称</span>
 				<div class="config-content_content">
-					
+					<input v-model="college" type="text" class="config-content_text">
 				</div>
 			</div>
 
@@ -36,7 +39,7 @@
 				</div>
 				<span class="config-content_word">专业名称</span>
 				<div class="config-content_content">
-					<input type="text" class="config-content_text">
+					<input v-model="major" type="text" class="config-content_text">
 				</div>
 			</div>
 
@@ -46,6 +49,9 @@
 				</div>
 				<span class="config-content_word">毕业学历</span>
 				<div class="config-content_content">
+					<select v-model="degree_type" class="config-content_text">                                        
+						<option v-for="(value, key) in info.degree_type" :value="value.type_id">{{value.name}}</option>             
+					</select>
 					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
 				</div>
 			</div>
@@ -56,11 +62,12 @@
 				</div>
 				<span class="config-content_word">入学年月</span>
 				<div class="config-content_content">
+					<input type="month" v-model="entrance_date" class="config-content_text">
 					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
 				</div>
 			</div>
 
-			<div class="config-content_button"><a class="home-button" href="#/personal">下一步</a></div>
+			<div class="config-content_button"><div @click="handleNext" class="home-button">下一步</div></div>
 		</div>
 
 		<div class="config-content_step">
@@ -73,11 +80,76 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import { UPDATE_FORM } from '../store/mutation-types'
 export default {
+	name: 'basic',
 	data () {
 	  return {
-		member: '1'
+			school: '',
+			college: '',
+			major: '',
+			degree_type: '',
+			entrance_date: ''
 	  }
+	},
+	created () {
+		if (!this.loaded) {
+			this.$router.push('/')
+		} else {
+			this.school = this.form.school
+			this.college = this.form.college
+			this.major = this.form.major
+			this.degree_type = this.form.degree_type
+			this.entrance_date = this.form.entrance_date
+		}
+	},
+	methods: {
+		...mapActions({
+			updateForm: UPDATE_FORM
+		}),
+		handleNext () {
+			if (this.school === '') {
+				alert('请选择学校名称')
+			} else if (this.college === '') {
+				alert('请填写院系名称')
+			} else if (this.major === '') {
+				alert('请填写专业名称')
+			} else if (this.degree_type === '') {
+				alert('请选择毕业学历')
+			} else if (this.entrance_date === '') {
+				alert('请选择入学年月')
+			} else {
+				this.updateForm({
+					key: 'school',
+					value: this.school
+				})
+				this.updateForm({
+					key: 'college',
+					value: this.college
+				})
+				this.updateForm({
+					key: 'major',
+					value: this.major
+				})
+				this.updateForm({
+					key: 'degree_type',
+					value: this.degree_type
+				})
+				this.updateForm({
+					key: 'entrance_date',
+					value: this.entrance_date
+				})
+				this.$router.push('/personal')
+			}
+		}
+	},
+	computed: {
+		...mapGetters([
+			'loaded',
+			'form',
+			'info'
+		])
 	}
 }
 </script>

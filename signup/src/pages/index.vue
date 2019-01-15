@@ -4,7 +4,7 @@
 	  <img class="home-header_img" src="../assets/images/logo.png" alt="">
 	  <div class="home-header_word">HUO XING SHI JIAN</div>
 	</div>
-	<div class="home-button" @click="handleStart">报名</div>
+	<div class="home-button" v-if="info !== ''" @click="handleStart">报名</div>
   </div>
 </template>
 
@@ -14,10 +14,12 @@ import { UPDATE_KEY } from '../store/mutation-types'
 export default {
 	name: 'index',
 	created () {
+		this.getData()
 	},
 	methods: {
 		...mapActions({
 			updateKey: UPDATE_KEY,
+			getData: 'getData'
 		}),
 		handleStart () {
 			this.updateKey({
@@ -29,7 +31,8 @@ export default {
 	},
 	computed: {
 		...mapGetters([
-			'loaded'
+			'loaded',
+			'info'
 		])
 	}
 }

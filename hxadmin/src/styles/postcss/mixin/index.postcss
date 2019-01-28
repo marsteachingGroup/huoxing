@@ -1,0 +1,21 @@
+@import '../variable/index.postcss';
+@import '../placeholder/index.postcss';
+
+@define-mixin bg $img, $url: var(--img-url) {
+  background-image: url(${url}/${img});
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+@define-mixin tofle $width: 100% {
+  @extend tofle;
+  width: $(width);
+}
+
+@define-mixin hide-font $type: 1 {
+  @if $type == 1 {
+    font: 0/0 'a';
+  } @else {
+    text-indent: -9999rem;
+  }
+}

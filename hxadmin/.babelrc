@@ -1,0 +1,18 @@
+{
+    "presets": [
+        ["env", { "modules": false }],
+        "stage-2",
+        "es2015"
+    ],
+    "plugins": ["transform-runtime", "transform-vue-jsx", ["component", {
+        "style": false,
+        "libraryName": "jfk-ui"
+    }]],
+    "comments": false,
+    "env": {
+        "test": {
+            "presets": ["env", "stage-2"],
+            "plugins": ["istanbul"]
+        }
+    }
+}

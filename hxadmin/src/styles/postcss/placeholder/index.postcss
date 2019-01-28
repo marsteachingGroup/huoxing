@@ -1,0 +1,56 @@
+@import '../variable/index.postcss';
+/*text-align*/
+@each $key, $val in (l, c, r), (left, center, right) {
+  @define-placeholder ta$(key) {
+    text-align: $(val)
+  }
+}
+/* display */
+@each $key, $val in (ib, b, n, f), (inline-block, block, none, flex) {
+  @define-placeholder d$(key) {
+    display: $(val)
+  }
+}
+
+@each $key, $val in (l, r, n), (left, right, none) {
+  @define-placeholder f$(key) {
+    float: $(val)
+  }
+}
+
+@each $key, $val in (r, a, f, s), (relative, absolute, fixed, static) {
+  @define-placeholder pos$(key) {
+    position: $(val)
+  }
+}
+
+/* margin padding */
+@each $num in var(--size-queue) {
+  @define-placeholder m$(num) {
+    margin: $(num)px
+  }
+  @define-placeholder p$(num) {
+    padding: $(num)px
+  }
+  @each $key, $val in (t, r, b, l), (top, right, bottom, left) {
+    @define-placeholder m$(key)$(num) {
+      margin-$(val): $(num)px;
+    }
+    @define-placeholder p$(key)$(num) {
+      padding-$(val): $(num)px;
+    }
+  }
+}
+/* font-size */
+@each $num in var(--font-size-queue) {
+  @define-placeholder fz$(num) {
+    font-size: $(num)px;
+  }
+}
+
+/* text-overflow ellipsis */
+@define-placeholder tofle {
+  text-overflow: ellipsis;
+  word-break: break-all;
+  white-space: nowrap;
+}

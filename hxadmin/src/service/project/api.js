@@ -1,11 +1,11 @@
 // api v1版本
-let API_URL_SUFFIX = '/index.php/iapi'
+let API_URL_SUFFIX = '/admin'
 
-const v1 = {
+const api = {
   // 价格码
-  GET_HOTEL_PRICES_CODE_INFO: `${API_URL_SUFFIX}/prices/code_edit`
+  GET_POJECT_LIST: `${API_URL_SUFFIX}/project`
 }
 
 export {
-  v1
+  api
 }

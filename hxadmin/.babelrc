@@ -5,8 +5,7 @@
         "es2015"
     ],
     "plugins": ["transform-runtime", "transform-vue-jsx", ["component", {
-        "style": false,
-        "libraryName": "jfk-ui"
+        "style": false
     }]],
     "comments": false,
     "env": {

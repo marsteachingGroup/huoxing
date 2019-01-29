@@ -1,6 +1,6 @@
 module.exports = {
-  '/index.php/iapi/v1': {
-    target: 'http://30.iwide.cn',
+  '/admin/project': {
+    target: 'http://api.marsco.online',
     changeOrigin: true,
     secure: false
   }

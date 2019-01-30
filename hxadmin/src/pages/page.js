@@ -11,6 +11,14 @@ const projectList = (r) => {
     r(projectList.default)
   }, showLoadError, 'projectList')
 }
+// 营销项目编辑
+const projectEdit = (r) => {
+  require.ensure([], function (require) {
+    let projectEdit = require('./project/projectEdit/index')
+    r(projectEdit.default)
+  }, showLoadError, 'projectEdit')
+}
 export default {
-  projectList
+  projectList,
+  projectEdit
 }

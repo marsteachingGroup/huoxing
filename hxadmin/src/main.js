@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import VueCookie from 'vue-cookie'
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import './styles/element-variables.scss'
 import './styles/postcss/common.postcss'
 
 import pages from '@/pages/page'

@@ -36,6 +36,13 @@ const postPojectEdit = (data, config) => {
   return ajax.post(url, data, config)
 }
 /**
+ * 查看营销项目
+ **/
+const getPojectView = (data, config) => {
+  let url = apiConfig['api'].GET_POJECT_VIEW
+  return ajax.get(url, data, config)
+}
+/**
  * 标签列表
  **/
 const getTagList = (data, config) => {
@@ -55,6 +62,7 @@ export {
   postPojectAdd,
   getPojectEdit,
   postPojectEdit,
+  getPojectView,
   getTagList,
   postTagAdd
 }

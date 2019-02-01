@@ -14,17 +14,25 @@
          <el-row class="hx-projectEdit_title">基本信息</el-row>
           <el-form-item label="项目名称" prop="name">
             <el-col :span="12">
-              <el-input v-model="form.name"></el-input>
+              <el-input v-model="form.name" :disabled="true"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="项目描述">
             <el-col :span="12">
-              <el-input type="textarea" :rows="10" v-model="form.description"></el-input>
+              <el-input type="textarea" :rows="10" v-model="form.description" :disabled="true"></el-input>
+            </el-col>
+            <el-col  class="hx-projectEdit_qrcode" :span="12">
+              <div class="hx-projectEdit_img">
+                <img :src="qrCode" alt="">
+              </div>
+              <div class="hx-projectEdit_img-button">
+                <el-button type="danger" ><a :href="qrCode" download="二维码">保存二维码</a></el-button>
+              </div>
             </el-col>
           </el-form-item>
-          <el-form-item label="报名人数上限" prop="peoples" required>
+          <el-form-item label="报名人数上限" prop="peoples">
             <el-col :span="12">
-              <el-input v-model="form.peoples" type="number" style="width:100px;"></el-input>
+              <el-input v-model="form.peoples" type="number" style="width:100px;"  :disabled="true"></el-input>
             </el-col>
           </el-form-item>
       </el-row>
@@ -36,7 +44,7 @@
            <el-col :span="8">
               <el-form-item label="关联学校" prop="school">
                 <el-col>
-                  <el-select v-model="form.school" placeholder="选择学校"  style="width:195px;">
+                  <el-select v-model="form.school" placeholder="选择学校"  :disabled="true" style="width:195px;">
                     <el-option
                       v-for="(value, key) in school"
                       :key="key"
@@ -50,7 +58,7 @@
             <el-col :span="8">
               <el-form-item label="关联校区">
                 <el-col>
-                  <el-input v-model="form.school_district" style="width:195px;"></el-input>
+                  <el-input v-model="form.school_district"  :disabled="true" style="width:195px;"></el-input>
                 </el-col>
               </el-form-item>
             </el-col>
@@ -58,7 +66,7 @@
 
          <el-form-item label="关联品牌"  prop="brand">
             <el-col :span="12">
-              <el-input v-model="form.brand" style="width:195px;"></el-input>
+              <el-input v-model="form.brand"  :disabled="true" style="width:195px;"></el-input>
             </el-col>
           </el-form-item>
       </el-row>
@@ -68,11 +76,8 @@
         <el-row>
           <el-col :span="12">
             <el-form-item class="hx-projectEdit_label" label="标签" prop="tag">
-              <el-input v-model="form.tag" :disabled="true"></el-input>
+              <el-input v-model="form.tag"  :disabled="true"></el-input>
             </el-form-item>
-          </el-col>
-          <el-col :span="4" style="margin-left: 15px;">
-            <el-button @click="dialog = true" type="danger">添加标签</el-button>
           </el-col>
         </el-row>
       </el-row>
@@ -90,6 +95,7 @@
                 <el-date-picker
                   v-model="form.pr_start_time"
                   type="datetime"
+                   :disabled="true"
                   placeholder="开始时间">
                 </el-date-picker>
               </el-form-item>
@@ -99,13 +105,14 @@
                 <el-date-picker
                   v-model="form.pr_end_time"
                   type="datetime"
+                  :disabled="true"
                   placeholder="结束时间">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="社团参与人数" prop="society_participants" required>
-                <el-input v-model="form.society_participants" type="number"></el-input>
+                <el-input v-model="form.society_participants" :disabled="true" type="number"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -116,6 +123,7 @@
                 <el-date-picker
                   v-model="form.stall_start_time"
                   type="datetime"
+                  :disabled="true"
                   placeholder="开始时间">
                 </el-date-picker>
               </el-form-item>
@@ -125,13 +133,14 @@
                 <el-date-picker
                   v-model="form.stall_end_time"
                   type="datetime"
+                  :disabled="true"
                   placeholder="结束时间">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="摆摊场地" prop="stall_site">
-                <el-input v-model="form.stall_site"></el-input>
+                <el-input :disabled="true" v-model="form.stall_site"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -142,6 +151,7 @@
                 <el-date-picker
                   v-model="form.check_building_start_time"
                   type="datetime"
+                  :disabled="true"
                   placeholder="开始时间">
                 </el-date-picker>
               </el-form-item>
@@ -151,6 +161,7 @@
                 <el-date-picker
                   v-model="form.check_building_end_time"
                   type="datetime"
+                  :disabled="true"
                   placeholder="结束时间">
                 </el-date-picker>
               </el-form-item>
@@ -169,6 +180,7 @@
                 <el-date-picker
                   v-model="form.tp_start_time"
                   type="datetime"
+                  :disabled="true"
                   placeholder="开始时间">
                 </el-date-picker>
               </el-form-item>
@@ -178,13 +190,14 @@
                 <el-date-picker
                   v-model="form.tp_end_time"
                   type="datetime"
+                  :disabled="true"
                   placeholder="结束时间">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="培训场地" prop="training_site">
-                <el-input v-model="form.training_site"></el-input>
+                <el-input v-model="form.training_site" :disabled="true"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -192,17 +205,17 @@
           <el-row>
             <el-col :span="8">
               <el-form-item label="参与培训人数" prop="tr_participants" required>
-                <el-input v-model="form.tr_participants" type="number"></el-input>
+                <el-input v-model="form.tr_participants" type="number" :disabled="true"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="培训讲师" prop="lector">
-                <el-input v-model="form.lector" ></el-input>
+                <el-input v-model="form.lector" :disabled="true"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="hx-projectEdit_checkbox">
               <el-form-item label="">
-                <el-checkbox v-model="form.tp_is_exist_media" true-label="1" false-label="2">是否有多媒体设备</el-checkbox>
+                <el-checkbox v-model="form.tp_is_exist_media" :disabled="true" true-label="1" false-label="2">是否有多媒体设备</el-checkbox>
               </el-form-item>
             </el-col>
           </el-row>
@@ -218,15 +231,17 @@
                 <el-date-picker
                   v-model="form.start_time"
                   type="datetime"
+                  :disabled="true"
                   placeholder="开始时间">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="结束时间" prop="end_time" required>
+              <el-form-item label="结束时间" prop="end_time">
                 <el-date-picker
                   v-model="form.end_time"
                   type="datetime"
+                  :disabled="true"
                   placeholder="结束时间">
                 </el-date-picker>
               </el-form-item>
@@ -243,22 +258,24 @@
                 <el-date-picker
                   v-model="form.fap_start_time"
                   type="datetime"
+                  :disabled="true"
                   placeholder="开始时间">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="结束时间" prop="fap_end_time" required>
+              <el-form-item label="结束时间" prop="fap_end_time">
                 <el-date-picker
                   v-model="form.fap_end_time"
                   type="datetime"
+                  :disabled="true"
                   placeholder="结束时间">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="决赛场地" prop="finals_site">
-                <el-input v-model="form.finals_site"></el-input>
+                <el-input v-model="form.finals_site" :disabled="true"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -266,17 +283,17 @@
           <el-row>
             <el-col :span="8">
               <el-form-item label="决赛团队数" prop="teams_num" required> 
-                <el-input v-model="form.teams_num" type="number"></el-input>
+                <el-input v-model="form.teams_num" type="number" :disabled="true"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="决赛评委" prop="judge">
-                <el-input v-model="form.judge" ></el-input>
+                <el-input v-model="form.judge" :disabled="true"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8" class="hx-projectEdit_checkbox">
               <el-form-item label="">
-                <el-checkbox v-model="form.fap_is_exist_media" true-label="1" false-label="2">是否有多媒体设备</el-checkbox>
+                <el-checkbox v-model="form.fap_is_exist_media" :disabled="true" true-label="1" false-label="2">是否有多媒体设备</el-checkbox>
               </el-form-item>
             </el-col>
           </el-row>
@@ -285,41 +302,24 @@
 
 
       <el-row class="hx-projectEdit_button">
-        <el-button type="danger" @click="handleSave('infoForm')">提交</el-button>
         <el-button>返回</el-button>
       </el-row>
     </el-form>
 
-    <el-dialog
-      title=""
-      :visible.sync="dialog"
-      width="50%">
-        <tag :tagChoose="tagChoose" @handleSave="handleDialog"></tag>
-    </el-dialog>
   </div>
 </template>
 <script>
-  import { getPojectAdd, postPojectAdd, getPojectEdit, postPojectEdit } from '@/service/project/http'
-  import Tag from '@/components/common/tag'
+  import { getPojectView } from '@/service/project/http'
   import { formatUrlParams } from '@/utils/utils'
   export default {
-    components: {
-      Tag
-    },
     created () {
       let params = formatUrlParams(location.search)
       this.id = params.id ? params.id : ''
       this.loading = true
       if (this.id === '') {
-        getPojectAdd().then((res) => {
-          this.loading = false
-          const data = res.data
-          this.school = data.school
-        }).catch(() => {
-          this.loading = false
-        })
+        this.$message.error('找不到项目ID')
       } else {
-        getPojectEdit({id: this.id}).then((res) => {
+        getPojectView({id: this.id}).then((res) => {
           this.loading = false
           const info = res.data.info
           this.school = res.data.school
@@ -356,257 +356,23 @@
           this.form['judge'] = info.award.judge
           this.form['fap_is_exist_media'] = info.award.fap_is_exist_media
 
-          this.tagChoose = info.tag_name.split(',')
+          this.qrCode = info.qr_url
         }).catch(() => {
           this.loading = false
         })
       }
     },
     methods: {
-      handleSave (formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            const form = this.form
-            let arg = {
-              'name': form.name,
-              'description': form.description,
-              'peoples': form.peoples,
-              'school_id': form.school,
-              'school_district': form.school_district,
-              'tag_name': form.tag,
-              'tag_sub_name': '标签',
-              'brand': form.brand,
-              'start_time': form.start_time,
-              'end_time': form.end_time,
-              'registration': {
-                'pr_start_time': form.pr_start_time,
-                'pr_end_time': form.pr_end_time,
-                'stall_start_time': form.stall_start_time,
-                'stall_end_time': form.stall_end_time,
-                'check_building_start_time': form.check_building_start_time,
-                'check_building_end_time': form.check_building_end_time,
-                'society_participants': form.society_participants,
-                'stall_site': form.stall_site
-              },
-              'training': {
-                'tp_start_time': form.tp_start_time,
-                'tp_end_time': form.tp_end_time,
-                'training_site': form.training_site,
-                'tr_participants': form.tr_participants,
-                'lector': form.lector,
-                'tp_is_exist_media': form.tp_is_exist_media
-              },
-              'award': {
-                'fap_start_time': form.fap_start_time,
-                'fap_end_time': form.fap_end_time,
-                'finals_site': form.finals_site,
-                'teams_num': form.teams_num,
-                'judge': form.judge,
-                'fap_is_exist_media': form.fap_is_exist_media
-              }
-            }
-            this.loading = true
-            if (this.id === '') {
-              postPojectAdd(arg).then((res) => {
-                this.loading = false
-                window.location.href = res.page_resource.index
-              }).catch(() => {
-                this.loading = false
-              })
-            } else {
-              arg['id'] = this.id
-              postPojectEdit(arg).then((res) => {
-                this.loading = false
-                this.$message({
-                  message: '修改成功',
-                  type: 'success'
-                })
-              }).catch(() => {
-                this.loading = false
-              })
-            }
-          }
-        })
-      },
-      handleDialog (checkList) {
-        this.tagChoose = checkList
-        this.form.tag = checkList.join(',')
-        this.dialog = false
+      handleQrcode () {
+        window.open(this.qrCode)
       }
     },
     data () {
-      const checkPeople = (rule, value, callback) => {
-        if (value === '') {
-          return callback(new Error('报名人数不能为空'))
-        }
-        if (value !== '' && value <= 0) {
-          return callback(new Error('报名人数必须大于0'))
-        }
-        return callback()
-      }
-      const checkPretime = (rule, value, callback) => {
-        if (value === '') {
-          return callback(new Error('请选择结束时间'))
-        }
-        if (value < this.form.pr_start_time && this.form.pr_start_time !== '') {
-          return callback(new Error('结束时间不能小于开始时间'))
-        }
-        return callback()
-      }
-      const checkSocietyParticipants = (rule, value, callback) => {
-        if (value === '') {
-          return callback(new Error('社团人数不能为空'))
-        }
-        if (value !== '' && value <= 0) {
-          return callback(new Error('社团人数必须大于0'))
-        }
-        return callback()
-      }
-      const checkStallEtime = (rule, value, callback) => {
-        if (value === '') {
-          return callback(new Error('请选择结束时间'))
-        }
-        if (value < this.form.stall_start_time && this.form.stall_start_time !== '') {
-          return callback(new Error('摆摊结束时间不能小于摆摊开始时间'))
-        }
-        return callback()
-      }
-      const checkBuildingEtime = (rule, value, callback) => {
-        if (value === '') {
-          return callback(new Error('请选择结束时间'))
-        }
-        if (value < this.form.check_building_start_time && this.form.check_building_start_time !== '') {
-          return callback(new Error('扫楼结束时间不能小于扫楼开始时间'))
-        }
-        return callback()
-      }
-      const checktpEtime = (rule, value, callback) => {
-        if (value === '') {
-          return callback(new Error('请选择结束时间'))
-        }
-        if (value < this.form.tp_start_time && this.form.tp_start_time !== '') {
-          return callback(new Error('结束时间不能小于开始时间'))
-        }
-        return callback()
-      }
-      const checkEtime = (rule, value, callback) => {
-        if (value === '') {
-          return callback(new Error('请选择结束时间'))
-        }
-        if (value < this.form.start_time && this.form.start_time !== '') {
-          return callback(new Error('结束时间不能小于开始时间'))
-        }
-        return callback()
-      }
-      const checkFapEtime = (rule, value, callback) => {
-        if (value === '') {
-          return callback(new Error('请选择结束时间'))
-        }
-        if (value < this.form.fap_start_time && this.form.fap_start_time !== '') {
-          return callback(new Error('结束时间不能小于开始时间'))
-        }
-        return callback()
-      }
-      const checkTeamsNum = (rule, value, callback) => {
-        if (value === '') {
-          return callback(new Error('决赛团队数不能为空'))
-        }
-        if (value !== '' && value <= 0) {
-          return callback(new Error('决赛团队数必须大于0'))
-        }
-        return callback()
-      }
-      const checkParticipants = (rule, value, callback) => {
-        if (value === '') {
-          return callback(new Error('参与培训人数不能为空'))
-        }
-        if (value !== '' && value <= 0) {
-          return callback(new Error('参与培训人数必须大于0'))
-        }
-        return callback()
-      }
       return {
         id: '',
         loading: false,
-        dialog: false,
-        tagChoose: [],
-        rules: {
-          name: [
-            { required: true, message: '请填写项目名称', trigger: 'change' }
-          ],
-          peoples: [
-            { validator: checkPeople, trigger: 'change' }
-          ],
-          school: [
-            { required: true, message: '请选择关联学校', trigger: 'change' }
-          ],
-          pr_start_time: [
-            { required: true, message: '请选择开始时间', trigger: 'change' }
-          ],
-          pr_end_time: [
-            { validator: checkPretime, trigger: 'change' }
-          ],
-          society_participants: [
-            { validator: checkSocietyParticipants, trigger: 'change' }
-          ],
-          stall_start_time: [
-            { required: true, message: '请选择开始时间', trigger: 'change' }
-          ],
-          stall_end_time: [
-            { validator: checkStallEtime, trigger: 'change' }
-          ],
-          check_building_start_time: [
-           { required: true, message: '请选择开始时间', trigger: 'change' }
-          ],
-          check_building_end_time: [
-            { validator: checkBuildingEtime, trigger: 'change' }
-          ],
-          tp_start_time: [
-           { required: true, message: '请选择开始时间', trigger: 'change' }
-          ],
-          tp_end_time: [
-            { validator: checktpEtime, trigger: 'change' }
-          ],
-          tr_participants: [
-            { validator: checkParticipants, trigger: 'change' }
-          ],
-          start_time: [
-            { required: true, message: '请选择开始时间', trigger: 'change' }
-          ],
-          end_time: [
-            { validator: checkEtime, trigger: 'change' }
-          ],
-          fap_start_time: [
-            { required: true, message: '请选择开始时间', trigger: 'change' }
-          ],
-          fap_end_time: [
-            { validator: checkFapEtime, trigger: 'change' }
-          ],
-          teams_num: [
-            { validator: checkTeamsNum, trigger: 'change' }
-          ],
-          tag: [
-            { required: true, message: '请选择标签', trigger: 'change' }
-          ],
-          brand: [
-            { required: true, message: '请填写关联品牌', trigger: 'change' }
-          ],
-          stall_site: [
-            { required: true, message: '请填写摆摊场地', trigger: 'change' }
-          ],
-          training_site: [
-            { required: true, message: '请填写培训场地', trigger: 'change' }
-          ],
-          lector: [
-            { required: true, message: '请填写培训讲师', trigger: 'change' }
-          ],
-          finals_site: [
-            { required: true, message: '请填写决赛场地', trigger: 'change' }
-          ],
-          judge: [
-            { required: true, message: '请填写决赛评委', trigger: 'change' }
-          ]
-        },
+        rules: {},
+        qrCode: '',
         form: {
           // 基础信息
           name: '',
@@ -704,12 +470,24 @@
       width: 120px;
     }
   }
-  &_label{
-    .el-input.is-disabled .el-input__inner{
-      border-color: #e4e7ed;
-      background-color: #fff;
-      color: #333333; 
+  &_qrcode{
+    text-align: center;
+  }
+  &_img{
+    img{
+      width: 140px;
+      height: 140px;
     }
+    &-button{
+      a{
+        color: #fff;
+      }
+    }
+  }
+  .el-input.is-disabled .el-input__inner, .el-textarea.is-disabled .el-textarea__inner{
+    border-color: #e4e7ed;
+    background-color: #fff;
+    color: #333333; 
   }
   .el-form-item.is-success .el-input__inner, 
   .el-form-item.is-success .el-input__inner:focus, 

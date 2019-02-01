@@ -18,7 +18,15 @@ const projectEdit = (r) => {
     r(projectEdit.default)
   }, showLoadError, 'projectEdit')
 }
+// 营销项目查看
+const projectView = (r) => {
+  require.ensure([], function (require) {
+    let projectView = require('./project/projectView/index')
+    r(projectView.default)
+  }, showLoadError, 'projectView')
+}
 export default {
   projectList,
-  projectEdit
+  projectEdit,
+  projectView
 }

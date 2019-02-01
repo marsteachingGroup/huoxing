@@ -12,6 +12,8 @@ const api = {
   GET_POJECT_EDIT: `${API_URL_SUFFIX}/project/edit`,
   // 营销项目提交编辑数据
   POST_POJECT_EDIT: `${API_URL_SUFFIX}/project/editPost`,
+  // 营销项目查看数据
+  GET_POJECT_VIEW: `${API_URL_SUFFIX}/project/show`,
   // 标签列表
   GET_TAG_LIST: `${API_URL_SUFFIX}/tag`,
   // 添加标签

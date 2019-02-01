@@ -5,6 +5,7 @@ const urlParams = formatUrlParams(window.location.href)
 // 开发环境跨域请求带cookie
 if (process.env.NODE_ENV === 'development') {
   axios.defaults.withCredentials = true
+  // axios.defaults.headers.common['token'] = window.token
 }
 // 默认一分钟超时
 axios.defaults.timeout = 60000

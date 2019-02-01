@@ -42,11 +42,19 @@ const getTagList = (data, config) => {
   let url = apiConfig['api'].GET_TAG_LIST
   return ajax.get(url, data, config)
 }
+/**
+ * 标签列表
+ **/
+const postTagAdd = (data, config) => {
+  let url = apiConfig['api'].POST_TAG_ADD
+  return ajax.post(url, data, config)
+}
 export {
   getPojectList,
   getPojectAdd,
   postPojectAdd,
   getPojectEdit,
   postPojectEdit,
-  getTagList
+  getTagList,
+  postTagAdd
 }

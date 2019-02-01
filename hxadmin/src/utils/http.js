@@ -1,6 +1,5 @@
 import axios from 'axios'
-// import { LOGIN_URL } from '@/config/env'
-import { Message } from 'element-ui'
+import { MessageBox } from 'element-ui'
 import { formatUrlParams } from '@/utils/utils'
 const urlParams = formatUrlParams(window.location.href)
 // 开发环境跨域请求带cookie
@@ -27,8 +26,6 @@ const checkStatus = function (response) {
     return response.data
   } else {
     return {
-      code: -404,
-      url: response.config.url,
       REJECTERRORCONFIG,
       ...response.data
     }
@@ -36,7 +33,6 @@ const checkStatus = function (response) {
 }
 const checkCode = function (res) {
   // 错误处理
-  console.log(res)
   if (res.code === 1) {
     return res
   } else {
@@ -45,21 +41,20 @@ const checkCode = function (res) {
 }
 
 const handleErrorStatus = function (res) {
-  // const { msg } = res
-  console.log(Message)
-  // if (!msg) {
-  //   MessageBox({
-  //     type: 'error',
-  //     title: '温馨提示',
-  //     message: msg
-  //   })
-  // } else {
-  //   MessageBox({
-  //     type: 'error',
-  //     title: '温馨提示',
-  //     message: '找不到页面'
-  //   })
-  // }
+  const { msg } = res
+  if (msg) {
+    MessageBox({
+      type: 'error',
+      title: '温馨提示',
+      message: msg
+    })
+  } else {
+    MessageBox({
+      type: 'error',
+      title: '温馨提示',
+      message: '请联系管理员确认是否存在相关页面'
+    })
+  }
   return Promise.reject(res)
 }
 

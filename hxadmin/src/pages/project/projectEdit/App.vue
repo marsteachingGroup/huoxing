@@ -1,7 +1,10 @@
 <template>
   <div class="hx-pages hx-projectEdit" v-loading="loading">
     <el-row class="hx-projectEdit_header">
-      <div class="hx-projectEdit_header-text">添加比赛</div>
+      <div class="hx-projectEdit_header-text">
+        <span v-if="id === ''">添加比赛</span>
+        <span v-else style="font-weight: bold;">比赛编码：{{id}}</span>
+      </div>
       <div class="hx-projectEdit_header-line"></div>
     </el-row>
 
@@ -19,7 +22,7 @@
               <el-input type="textarea" :autosize="{minRows: 6, maxRows: 8}" v-model="form.description"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="报名人数上限" prop="peoples">
+          <el-form-item label="报名人数上限" prop="peoples" required>
             <el-col :span="12">
               <el-input v-model="form.peoples" type="number" style="width:100px;"></el-input>
             </el-col>
@@ -47,13 +50,13 @@
             <el-col :span="8">
               <el-form-item label="关联校区">
                 <el-col>
-                  <el-input v-model="form.school_district" style="width:195px;">></el-input>
+                  <el-input v-model="form.school_district" style="width:195px;"></el-input>
                 </el-col>
               </el-form-item>
             </el-col>
          </el-row>
 
-         <el-form-item label="关联品牌">
+         <el-form-item label="关联品牌"  prop="brand">
             <el-col :span="12">
               <el-input v-model="form.brand" style="width:195px;"></el-input>
             </el-col>
@@ -64,8 +67,8 @@
         <el-row class="hx-projectEdit_title">标签信息</el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="标签">
-              <el-input v-model="form.tag"></el-input>
+            <el-form-item class="hx-projectEdit_label" label="标签" prop="tag">
+              <el-input v-model="form.tag" :disabled="true"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="4" style="margin-left: 15px;">
@@ -92,7 +95,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="结束时间" prop="pr_end_time">
+              <el-form-item label="结束时间" prop="pr_end_time" required>
                 <el-date-picker
                   v-model="form.pr_end_time"
                   type="datetime"
@@ -101,7 +104,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="社团参与人数" prop="society_participants">
+              <el-form-item label="社团参与人数" prop="society_participants" required>
                 <el-input v-model="form.society_participants" type="number"></el-input>
               </el-form-item>
             </el-col>
@@ -118,7 +121,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="摆摊结束时间" prop="stall_end_time">
+              <el-form-item label="摆摊结束时间" prop="stall_end_time" required>
                 <el-date-picker
                   v-model="form.stall_end_time"
                   type="datetime"
@@ -127,7 +130,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="摆摊场地">
+              <el-form-item label="摆摊场地" prop="stall_site">
                 <el-input v-model="form.stall_site"></el-input>
               </el-form-item>
             </el-col>
@@ -144,7 +147,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="扫楼结束时间" prop="check_building_end_time">
+              <el-form-item label="扫楼结束时间" prop="check_building_end_time" required>
                 <el-date-picker
                   v-model="form.check_building_end_time"
                   type="datetime"
@@ -171,7 +174,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="结束时间" prop="tp_end_time">
+              <el-form-item label="结束时间" prop="tp_end_time" required>
                 <el-date-picker
                   v-model="form.tp_end_time"
                   type="datetime"
@@ -188,7 +191,7 @@
 
           <el-row>
             <el-col :span="8">
-              <el-form-item label="参与培训人数" prop="tr_participants">
+              <el-form-item label="参与培训人数" prop="tr_participants" required>
                 <el-input v-model="form.tr_participants" type="number"></el-input>
               </el-form-item>
             </el-col>
@@ -220,7 +223,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="结束时间" prop="end_time">
+              <el-form-item label="结束时间" prop="end_time" required>
                 <el-date-picker
                   v-model="form.end_time"
                   type="datetime"
@@ -245,7 +248,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="结束时间" prop="fap_end_time">
+              <el-form-item label="结束时间" prop="fap_end_time" required>
                 <el-date-picker
                   v-model="form.fap_end_time"
                   type="datetime"
@@ -262,7 +265,7 @@
 
           <el-row>
             <el-col :span="8">
-              <el-form-item label="决赛团队数" prop="teams_num">
+              <el-form-item label="决赛团队数" prop="teams_num" required> 
                 <el-input v-model="form.teams_num" type="number"></el-input>
               </el-form-item>
             </el-col>
@@ -291,35 +294,144 @@
       title=""
       :visible.sync="dialog"
       width="50%">
-        <tag :tag="tag"></tag>
+        <tag :tagChoose="tagChoose" @handleSave="handleDialog"></tag>
     </el-dialog>
   </div>
 </template>
 <script>
-  import { getPojectAdd } from '@/service/project/http'
+  import { getPojectAdd, postPojectAdd, getPojectEdit, postPojectEdit } from '@/service/project/http'
   import Tag from '@/components/common/tag'
+  import { formatUrlParams } from '@/utils/utils'
   export default {
     components: {
       Tag
     },
     created () {
+      let params = formatUrlParams(location.search)
+      this.id = params.id ? params.id : ''
       this.loading = true
-      getPojectAdd().then((res) => {
-        this.loading = false
-        const data = res.data
-        this.school = data.school
-        for (let item in data.tag) {
-          this.tag.push(data.tag[item])
-        }
-      })
+      if (this.id === '') {
+        getPojectAdd().then((res) => {
+          this.loading = false
+          const data = res.data
+          this.school = data.school
+        }).catch(() => {
+          this.loading = false
+        })
+      } else {
+        getPojectEdit({id: this.id}).then((res) => {
+          this.loading = false
+          const info = res.data.info
+          this.school = res.data.school
+          this.form['name'] = info.name
+          this.form['description'] = info.description
+          this.form['peoples'] = info.peoples
+          this.form['school'] = info.school_id
+          this.form['school_district'] = info.school_district
+          this.form['tag'] = info.tag_name
+          this.form['brand'] = info.brand
+          this.form['start_time'] = info.start_time
+          this.form['end_time'] = info.end_time
+
+          this.form['pr_start_time'] = info.registration.pr_start_time
+          this.form['pr_end_time'] = info.registration.pr_end_time
+          this.form['stall_start_time'] = info.registration.stall_start_time
+          this.form['stall_end_time'] = info.registration.stall_end_time
+          this.form['check_building_start_time'] = info.registration.check_building_start_time
+          this.form['check_building_end_time'] = info.registration.check_building_end_time
+          this.form['society_participants'] = info.registration.society_participants
+          this.form['stall_site'] = info.registration.stall_site
+
+          this.form['tp_start_time'] = info.training.tp_start_time
+          this.form['tp_end_time'] = info.training.tp_end_time
+          this.form['training_site'] = info.training.training_site
+          this.form['tr_participants'] = info.training.tr_participants
+          this.form['lector'] = info.training.lector
+          this.form['tp_is_exist_media'] = info.training.tp_is_exist_media
+
+          this.form['fap_start_time'] = info.award.fap_start_time
+          this.form['fap_end_time'] = info.award.fap_end_time
+          this.form['finals_site'] = info.award.finals_site
+          this.form['teams_num'] = info.award.teams_num
+          this.form['judge'] = info.award.judge
+          this.form['fap_is_exist_media'] = info.award.fap_is_exist_media
+
+          this.tagChoose = info.tag_name.split(',')
+        }).catch(() => {
+          this.loading = false
+        })
+      }
     },
     methods: {
       handleSave (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(this.form)
+            const form = this.form
+            let arg = {
+              'name': form.name,
+              'description': form.description,
+              'peoples': form.peoples,
+              'school_id': form.school,
+              'school_district': form.school_district,
+              'tag_name': form.tag,
+              'tag_sub_name': '标签',
+              'brand': form.brand,
+              'start_time': form.start_time,
+              'end_time': form.end_time,
+              'registration': {
+                'pr_start_time': form.pr_start_time,
+                'pr_end_time': form.pr_end_time,
+                'stall_start_time': form.stall_start_time,
+                'stall_end_time': form.stall_end_time,
+                'check_building_start_time': form.check_building_start_time,
+                'check_building_end_time': form.check_building_end_time,
+                'society_participants': form.society_participants,
+                'stall_site': form.stall_site
+              },
+              'training': {
+                'tp_start_time': form.tp_start_time,
+                'tp_end_time': form.tp_end_time,
+                'training_site': form.training_site,
+                'tr_participants': form.tr_participants,
+                'lector': form.lector,
+                'tp_is_exist_media': form.tp_is_exist_media
+              },
+              'award': {
+                'fap_start_time': form.fap_start_time,
+                'fap_end_time': form.fap_end_time,
+                'finals_site': form.finals_site,
+                'teams_num': form.teams_num,
+                'judge': form.judge,
+                'fap_is_exist_media': form.fap_is_exist_media
+              }
+            }
+            this.loading = true
+            if (this.id === '') {
+              postPojectAdd(arg).then((res) => {
+                this.loading = false
+                window.location.href = res.page_resource.index
+              }).catch(() => {
+                this.loading = false
+              })
+            } else {
+              arg['id'] = this.id
+              postPojectEdit(arg).then((res) => {
+                this.loading = false
+                this.$message({
+                  message: '修改成功',
+                  type: 'success'
+                })
+              }).catch(() => {
+                this.loading = false
+              })
+            }
           }
         })
+      },
+      handleDialog (checkList) {
+        this.tagChoose = checkList
+        this.form.tag = checkList.join(',')
+        this.dialog = false
       }
     },
     data () {
@@ -414,11 +526,13 @@
         return callback()
       }
       return {
+        id: '',
         loading: false,
         dialog: false,
+        tagChoose: [],
         rules: {
           name: [
-            { required: true, message: '请输入项目名称', trigger: 'change' }
+            { required: true, message: '请填写项目名称', trigger: 'change' }
           ],
           peoples: [
             { validator: checkPeople, trigger: 'change' }
@@ -470,6 +584,27 @@
           ],
           teams_num: [
             { validator: checkTeamsNum, trigger: 'change' }
+          ],
+          tag: [
+            { required: true, message: '请选择标签', trigger: 'change' }
+          ],
+          brand: [
+            { required: true, message: '请填写关联品牌', trigger: 'change' }
+          ],
+          stall_site: [
+            { required: true, message: '请填写摆摊场地', trigger: 'change' }
+          ],
+          training_site: [
+            { required: true, message: '请填写培训场地', trigger: 'change' }
+          ],
+          lector: [
+            { required: true, message: '请填写培训讲师', trigger: 'change' }
+          ],
+          finals_site: [
+            { required: true, message: '请填写决赛场地', trigger: 'change' }
+          ],
+          judge: [
+            { required: true, message: '请填写决赛评委', trigger: 'change' }
           ]
         },
         form: {
@@ -498,14 +633,14 @@
           training_site: '',
           tr_participants: '',
           lector: '',
-          tp_is_exist_media: '',
+          tp_is_exist_media: '2',
           // 决赛颁奖期信息
           fap_start_time: '',
           fap_end_time: '',
           finals_site: '',
           teams_num: '',
           judge: '',
-          fap_is_exist_media: ''
+          fap_is_exist_media: '2'
         },
         school: [],
         tag: []
@@ -568,6 +703,19 @@
     button{
       width: 120px;
     }
+  }
+  &_label{
+    .el-input.is-disabled .el-input__inner{
+      border-color: #e4e7ed;
+      background-color: #fff;
+      color: #333333; 
+    }
+  }
+  .el-form-item.is-success .el-input__inner, 
+  .el-form-item.is-success .el-input__inner:focus, 
+  .el-form-item.is-success .el-textarea__inner, 
+  .el-form-item.is-success .el-textarea__inner:focus{
+    border: 1px solid #dcdfe6;
   }
 }
 </style>

@@ -302,7 +302,7 @@
 
 
       <el-row class="hx-projectEdit_button">
-        <el-button>返回</el-button>
+        <a :href="links.index"><el-button>返回</el-button></a>
       </el-row>
     </el-form>
 
@@ -357,6 +357,7 @@
           this.form['fap_is_exist_media'] = info.award.fap_is_exist_media
 
           this.qrCode = info.qr_url
+          this.links = res.page_resource
         }).catch(() => {
           this.loading = false
         })
@@ -409,7 +410,8 @@
           fap_is_exist_media: '2'
         },
         school: [],
-        tag: []
+        tag: [],
+        links: {}
       }
     }
   }

@@ -286,7 +286,7 @@
 
       <el-row class="hx-projectEdit_button">
         <el-button type="danger" @click="handleSave('infoForm')">提交</el-button>
-        <el-button>返回</el-button>
+        <a :href="links.index"><el-button>返回</el-button></a>
       </el-row>
     </el-form>
 
@@ -315,6 +315,7 @@
           this.loading = false
           const data = res.data
           this.school = data.school
+          this.links = res.page_resource
         }).catch(() => {
           this.loading = false
         })
@@ -357,6 +358,7 @@
           this.form['fap_is_exist_media'] = info.award.fap_is_exist_media
 
           this.tagChoose = info.tag_name.split(',')
+          this.links = res.page_resource
         }).catch(() => {
           this.loading = false
         })
@@ -643,7 +645,8 @@
           fap_is_exist_media: '2'
         },
         school: [],
-        tag: []
+        tag: [],
+        links: {}
       }
     }
   }

@@ -2,10 +2,11 @@ import axios from 'axios'
 import { MessageBox } from 'element-ui'
 import { formatUrlParams } from '@/utils/utils'
 const urlParams = formatUrlParams(window.location.href)
+axios.defaults.withCredentials = false
 // 开发环境跨域请求带cookie
-if (process.env.NODE_ENV === 'development') {
-  axios.defaults.withCredentials = true
-  // axios.defaults.headers.common['token'] = window.token
+if (process.env.NODE_ENV === 'production') {
+  axios.defaults.headers.common['XX-Device-Type'] = 'web'
+  axios.defaults.headers.common['XX-Token'] = window.token
 }
 // 默认一分钟超时
 axios.defaults.timeout = 60000
@@ -34,6 +35,7 @@ const checkStatus = function (response) {
 }
 const checkCode = function (res) {
   // 错误处理
+  console.log(res.code)
   if (res.code === 1) {
     return res
   } else {

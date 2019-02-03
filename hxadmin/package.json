@@ -40,6 +40,7 @@
         "vuedraggable": "^2.14.1",
         "vuex": "^2.3.1",
         "vuex-mapstate-modelvalue-instrict": "^0.0.3",
+        "webpack-parallel-uglify-plugin": "^1.1.0",
         "weixin-js-sdk": "^1.2.0",
         "xls-to-json": "^0.4.0"
     },

@@ -1,44 +1,44 @@
 {
-  "pages": [
-    "pages/index/main",
-    "pages/logs/main",
-    "pages/counter/main"
-  ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
-  },
-  "tabBar": {
-    "color": "#999",
-    "backgroundColor": "#fafafa",
-    "selectedColor": "#333",
-    "borderStyle": "white",
+    "pages": [
+        "pages/index/main",
+        "pages/logs/main",
+        "pages/counter/main"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#3fc9d4",
+        "navigationBarTitleText": "火星实践",
+        "navigationBarTextStyle": "white"
+    },
+    "tabBar": {
+        "color": "#353535",
+        "backgroundColor": "#fafafa",
+        "selectedColor": "#5fb6bd",
+        "borderStyle": "white",
 
-    "list": [{
-      "text": "首页",
-      "pagePath": "pages/index/main",
-      "iconPath": "static/tabs/home.png",
-      "selectedIconPath": "static/tabs/home-active.png"
-    }, {
-      "text": "订单",
-      "pagePath": "pages/logs/main",
-      "iconPath": "static/tabs/orders.png",
-      "selectedIconPath": "static/tabs/orders-active.png"
-    }],
+        "list": [{
+            "text": "首页",
+            "pagePath": "pages/index/main",
+            "iconPath": "static/tabs/home.png",
+            "selectedIconPath": "static/tabs/home-active.png"
+        }, {
+            "text": "活动",
+            "pagePath": "pages/logs/main",
+            "iconPath": "static/tabs/activity.png",
+            "selectedIconPath": "static/tabs/activity-active.png"
+        }],
 
-    "items": [{
-      "name": "首页",
-      "pagePath": "pages/index/main",
-      "icon": "static/tabs/home.png",
-      "activeIcon": "static/tabs/home-active.png"
-    }, {
-      "name": "订单",
-      "pagePath": "pages/logs/main",
-      "icon": "static/tabs/orders.png",
-      "activeIcon": "static/tabs/orders-active.png"
-    }],
-    "position": "bottom"
-  }
+        "items": [{
+            "name": "首页",
+            "pagePath": "pages/index/main",
+            "icon": "static/tabs/home.png",
+            "activeIcon": "static/tabs/home-active.png"
+        }, {
+            "name": "活动",
+            "pagePath": "pages/logs/main",
+            "icon": "static/tabs/activity.png",
+            "activeIcon": "static/tabs/activity-active.png"
+        }],
+        "position": "bottom"
+    }
 }

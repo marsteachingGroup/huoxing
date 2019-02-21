@@ -1,7 +1,7 @@
 {
     "pages": [
         "pages/index/main",
-        "pages/logs/main",
+        "pages/activity/main",
         "pages/counter/main"
     ],
     "window": {
@@ -14,7 +14,7 @@
         "color": "#353535",
         "backgroundColor": "#fafafa",
         "selectedColor": "#5fb6bd",
-        "borderStyle": "white",
+        "borderStyle": "black",
 
         "list": [{
             "text": "首页",
@@ -23,7 +23,7 @@
             "selectedIconPath": "static/tabs/home-active.png"
         }, {
             "text": "活动",
-            "pagePath": "pages/logs/main",
+            "pagePath": "pages/activity/main",
             "iconPath": "static/tabs/activity.png",
             "selectedIconPath": "static/tabs/activity-active.png"
         }],
@@ -35,7 +35,7 @@
             "activeIcon": "static/tabs/home-active.png"
         }, {
             "name": "活动",
-            "pagePath": "pages/logs/main",
+            "pagePath": "pages/activity/main",
             "icon": "static/tabs/activity.png",
             "activeIcon": "static/tabs/activity-active.png"
         }],

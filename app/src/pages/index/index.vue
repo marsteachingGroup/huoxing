@@ -28,55 +28,22 @@
 
     <div class="hx-index_content">
 
-      <div class="hx-index_rows">
-        <p class="hx-index_title">广州大学校园营销挑战赛开赛啦!</p>
+      <a class="hx-index_rows" :href="'/pages/detail/main?id=' + value.id" v-for="(value, key) in list" :key="key">
+        <p class="hx-index_title">{{value.name}}</p>
         <div class="hx-index_detail">
           <div class="hx-index_images" >
             <img src="../../images/text.png" alt="">
           </div>
           <div class="hx-index_info">
             <div class="hx-index_tag">
-              <div class="hx-index_tag-item">校级</div>
-              <div class="hx-index_tag-item">营销实践</div>
+              <div class="hx-index_tag-item" v-for="(item, index) in value.tagArr" :key="index">{{item}}</div>
             </div>
-            <div class="hx-index_brief">活动简介活动简介活动活动简介活动简介活动简介活动简介活动简介活动简介活动简介活动简介活动简介简介活动简介活动简介活动简介活动简介活动简介活动简介</div>
+            <div class="hx-index_brief">{{value.description}}</div>
           </div>
         </div>
-      </div>
+      </a>
 
-      <div class="hx-index_rows">
-        <p class="hx-index_title">广州大学校园营销挑战赛开赛啦!</p>
-        <div class="hx-index_detail">
-          <div class="hx-index_images" >
-            <img src="../../images/text.png" alt="">
-          </div>
-          <div class="hx-index_info">
-            <div class="hx-index_tag">
-              <div class="hx-index_tag-item">校级</div>
-              <div class="hx-index_tag-item">营销实践</div>
-            </div>
-            <div class="hx-index_brief">活动简介活动简介活动活动简介活动简介活动简介活动简介活动简介活动简介活动简介活动简介活动简介简介活动简介活动简介活动简介活动简介活动简介活动简介</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hx-index_rows">
-        <p class="hx-index_title">广州大学校园营销挑战赛开赛啦!</p>
-        <div class="hx-index_detail">
-          <div class="hx-index_images" >
-            <img src="../../images/text.png" alt="">
-          </div>
-          <div class="hx-index_info">
-            <div class="hx-index_tag">
-              <div class="hx-index_tag-item">校级</div>
-              <div class="hx-index_tag-item">营销实践</div>
-            </div>
-            <div class="hx-index_brief">活动简介活动简介活动活动简介活动简介活动简介活动简介活动简介活动简介活动简介活动简介活动简介简介活动简介活动简介活动简介活动简介活动简介活动简介</div>
-          </div>
-        </div>
-      </div>
     </div>
-     <!-- <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a> -->
   </div>
 </template>
 
@@ -87,6 +54,7 @@ import search from '@/components/search'
 export default {
   data () {
     return {
+      list: []
     }
   },
 
@@ -96,8 +64,20 @@ export default {
 
   methods: {
     async getData () {
-      const res = await api.getIndexData()
-      console.log(res)
+      wx.showLoading({
+        title: '加载中',
+        mask: true
+      })
+      try {
+        const res = await api.getIndexData()
+        this.list = res.data.list
+        for (let item in this.list) {
+          this.list[item].tagArr = this.list[item].tag_name.split(',')
+        }
+      } catch (e) {
+        console.log(e)
+      }
+      wx.hideLoading()
     }
   },
 
@@ -146,6 +126,7 @@ export default {
   &_rows{
     padding: 10px 0;
     border-bottom: 1rpx solid #e6e6e6;
+    display: block;
     &:last-child{
       border: 0;
     }
@@ -172,13 +153,15 @@ export default {
   &_tag{
     display: flex;
     font-size: 14px;
-    margin-bottom: 35rpx;
+    flex-wrap: wrap;
+    margin-bottom: 25rpx;
     &-item{
       color: #8a3d85;
       border-radius: 4px;
       border: 1rpx solid;
       padding: 3rpx 15rpx;
       margin-right: 14rpx;
+      margin-bottom: 10rpx;
     }
   }
   &_brief{

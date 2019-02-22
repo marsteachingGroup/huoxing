@@ -1,11 +1,10 @@
 import request from './request'
 
-// const ApiRootUrl = 'http://127.0.0.1:8360/api/'
-
 const api = {
   // 首页数据接口
-  getIndexData: (r) => request.get('activity/project', null, {
-  })
+  getIndexData: (r) => request.get('/activity/project?debug=1', null, {}),
+  // 详情
+  getDetail: (paramObj) => request.get('/activity/project/read?debug=1', paramObj, {})
 }
 
 export default api

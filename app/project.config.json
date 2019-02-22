@@ -39,9 +39,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 1,
 					"name": "详情页",
 					"pathName": "pages/detail/main",
+					"query": "id=8",
 					"scene": null
 				}
 			]

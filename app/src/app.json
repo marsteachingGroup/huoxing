@@ -2,7 +2,8 @@
     "pages": [
         "pages/index/main",
         "pages/activity/main",
-        "pages/detail/main"
+        "pages/detail/main",
+        "pages/signup/main"
     ],
     "window": {
         "backgroundTextStyle": "light",

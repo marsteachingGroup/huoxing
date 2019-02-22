@@ -1,6 +1,7 @@
 export default {
   loaded: false,
   info: '',
+  aid: '',
   form: {
     role_type: '',
     phone: '',

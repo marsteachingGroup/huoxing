@@ -161,6 +161,7 @@ export default {
 			let arg = this.form
 			arg['school_id'] = arg['school'].school_id
 			arg['school_name'] = arg['school'].school_name
+			arg['aid'] = this.aid
 			axios.post('/api/activity/index/post', arg).then((response) => {
 				this.Loading = false
 				const data = response.data.data
@@ -201,7 +202,8 @@ export default {
 		...mapGetters([
 			'loaded',
 			'form',
-			'info'
+			'info',
+			'aid'
 		])
 	}
 }

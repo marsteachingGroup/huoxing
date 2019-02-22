@@ -45,8 +45,11 @@ let baseWebpackConfig = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue': 'mpvue',
-      '@': resolve('src')
+      '@': resolve('src'),
+      vue: 'mpvue',
+      flyio: 'flyio/dist/npm/wx',
+      wx: resolve('src/utils/wx'),
+      wxFunction: resolve('src/utils/wxFunction')
     },
     symlinks: false,
     aliasFields: ['mpvue', 'weapp', 'browser'],

@@ -1,25 +1,22 @@
 <template>
   <div>
-      <search></search>
-      <swiper v-if="imgUrls.length > 0" indidator-dots="imgUrls.length > 1" >
+      <!-- <swiper v-if="imgUrls.length > 0" indidator-dots="imgUrls.length > 1" >
       <block v-for="(item, index) in imgUrls" :key="index" >
         <swiper-item>
           <image :src="item" mode="scaleToFill"></image>
         </swiper-item>
       </block>
-    </swiper>
+    </swiper> -->
 
   </div>
 </template>
 
 <script>
 import { formatTime } from '@/utils/index'
-import search from '@/components/search'
 export default {
 
   data () {
     return {
-      logs: [],
       imgUrls: [
         'http://mss.sankuai.com/v1/mss_51a7233366a4427fa6132a6ce72dbe54/newsPicture/05558951-de60-49fb-b674-dd906c8897a6',
         'http://mss.sankuai.com/v1/mss_51a7233366a4427fa6132a6ce72dbe54/coursePicture/0fbcfdf7-0040-4692-8f84-78bb21f3395d',
@@ -27,29 +24,10 @@ export default {
       ]
     }
   },
-  components: {
-    search
-  },
   created () {
-    let logs
-    if (mpvuePlatform === 'my') {
-      logs = mpvue.getStorageSync({key: 'logs'}).data || []
-    } else {
-      logs = mpvue.getStorageSync('logs') || []
-    }
-    this.logs = logs.map(log => formatTime(new Date(log)))
   }
 }
 </script>
 
 <style>
-.log-list {
-  display: flex;
-  flex-direction: column;
-  padding: 40rpx;
-}
-
-.log-item {
-  margin: 10rpx;
-}
 </style>

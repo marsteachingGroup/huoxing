@@ -2,7 +2,7 @@
     "pages": [
         "pages/index/main",
         "pages/activity/main",
-        "pages/counter/main"
+        "pages/detail/main"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -13,8 +13,8 @@
     "tabBar": {
         "color": "#353535",
         "backgroundColor": "#fafafa",
-        "selectedColor": "#5fb6bd",
-        "borderStyle": "black",
+        "selectedColor": "#333",
+        "borderStyle": "white",
 
         "list": [{
             "text": "首页",

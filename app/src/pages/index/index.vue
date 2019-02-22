@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import api from '@/utils/api'
 import search from '@/components/search'
 
 export default {
@@ -94,10 +95,14 @@ export default {
   },
 
   methods: {
+    async getData () {
+      const res = await api.getIndexData()
+      console.log(res)
+    }
   },
 
   created () {
-    let app = getApp()
+    this.getData()
   }
 }
 </script>

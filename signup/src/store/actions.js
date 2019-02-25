@@ -11,7 +11,7 @@ import {
 export default {
   getData ({ commit, state }) {
     let params = formatUrlParams(location.search)
-    if (params.aid === '') {
+    if (!params.aid || params.aid === '') {
       alert('找不到比赛id')
     } else {
       axios.get('/api/activity/index/detail?aid=' + params.aid).then((response) => {

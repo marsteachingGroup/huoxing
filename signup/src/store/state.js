@@ -5,9 +5,9 @@ export default {
   form: {
     role_type: '',
     phone: '',
-    code: '',
     email: '',
     school: '',
+    school_zone: '',
     college: '',
     major: '',
     degree_type: '',
@@ -16,6 +16,9 @@ export default {
     sex: '',
     identify_number: '',
     blood_type: '',
-    native_place: ''
+    native_place: '',
+    team_name: '',
+    team_no: '',
+    sms: ''
   }
 }

@@ -15,8 +15,23 @@
 				</div>
 				<span class="config-content_word">学校名称</span>
 				<div class="config-content_content">
-					<select v-model="school" class="config-content_text">                                        
+					<select v-model="school" class="config-content_text" @change="school_zone = ''">  
+						<option value="" disabled></option>                                       
 						<option v-for="(value, key) in info.school" :value="value">{{value.school_name}}</option>             
+					</select>
+					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
+				</div>
+			</div>
+
+			<div class="config-content_item jfk-flex">
+				<div class="config-content_left">
+				  <img class="config-content_icon" src="../assets/images/icon/5.png" alt="">
+				</div>
+				<span class="config-content_word">校区名称</span>
+				<div class="config-content_content">
+					<select v-model="school_zone" class="config-content_text">  
+						<option value="" disabled></option>                                       
+						<option v-for="(value, key) in school.school_zone" :value="key">{{value}}</option>             
 					</select>
 					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
 				</div>
@@ -49,7 +64,8 @@
 				</div>
 				<span class="config-content_word">毕业学历</span>
 				<div class="config-content_content">
-					<select v-model="degree_type" class="config-content_text">                                        
+					<select v-model="degree_type" class="config-content_text">   
+						<option value="" disabled></option>                                           
 						<option v-for="(value, key) in info.degree_type" :value="value.type_id">{{value.name}}</option>             
 					</select>
 					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
@@ -90,7 +106,8 @@ export default {
 			college: '',
 			major: '',
 			degree_type: '',
-			entrance_date: ''
+			entrance_date: '',
+			school_zone: ''
 	  }
 	},
 	created () {
@@ -102,6 +119,7 @@ export default {
 			this.major = this.form.major
 			this.degree_type = this.form.degree_type
 			this.entrance_date = this.form.entrance_date
+			this.school_zone = this.form.school_zone
 		}
 	},
 	methods: {
@@ -111,6 +129,8 @@ export default {
 		handleNext () {
 			if (this.school === '') {
 				alert('请选择学校名称')
+			} else if (this.school_zone === '') {
+				alert('请选择校区名称')
 			} else if (this.college === '') {
 				alert('请填写院系名称')
 			} else if (this.major === '') {
@@ -123,6 +143,10 @@ export default {
 				this.updateForm({
 					key: 'school',
 					value: this.school
+				})
+				this.updateForm({
+					key: 'school_zone',
+					value: this.school_zone
 				})
 				this.updateForm({
 					key: 'college',

@@ -56,7 +56,8 @@
 				</div>
 				<span class="config-content_word">血型(选填)</span>
 				<div class="config-content_content">
-					<select v-model="blood_type" class="config-content_text">                                        
+					<select v-model="blood_type" class="config-content_text">         
+						<option value="" disabled></option>                               
 						<option v-for="(value, key) in info.blood_type" :value="value">{{value}}</option>             
 					</select>
 					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
@@ -91,6 +92,7 @@ import Loading from '../components/loading'
 import { mapGetters, mapActions } from 'vuex'
 import { UPDATE_FORM, UPDATE_KEY } from '../store/mutation-types'
 import axios from 'axios'
+const regId = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
 export default {
 	name: 'personal',
 	components: {
@@ -128,10 +130,12 @@ export default {
 				alert('请填写姓名')
 			} else if (this.sex === '') {
 				alert('请选择性别')
-			} else if (this.major === '') {
+			} else if (this.identify_number === '') {
 				alert('请填写身份证号')
 			} else if (this.native_place === '') {
 				alert('请填写籍贯')
+			} else if (!regId.test(this.identify_number)) {
+				alert('请输入正确的身份证号')
 			} else {
 				this.updateForm({
 					key: 'name',
@@ -168,6 +172,7 @@ export default {
 				const code = response.data.code
 				if (code === 0) {
 					alert(response.data.msg)
+					this.$router.push('/basic')
 				} else {
 					this.updateKey({
 						key: 'loaded',
@@ -179,9 +184,10 @@ export default {
 						value: {
 							role_type: '',
 							phone: '',
-							code: '',
+							sms: '',
 							email: '',
 							school: '',
+							school_zone: '',
 							college: '',
 							major: '',
 							degree_type: '',

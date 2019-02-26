@@ -19,6 +19,9 @@
         prop="name"
         label="项目标题"
         width="250">
+        <template slot-scope="scope">
+          <a style="color: #496397;" :href="links.show + '?id=' + scope.row.id">{{scope.row.name}}</a>
+        </template>
       </el-table-column>
       <el-table-column
         prop="school_name"
@@ -74,7 +77,7 @@
     methods: {
       handleSearch () {
         this.loading = true
-        getPojectList({keyword: this.keyword}).then((res) => {
+        getPojectList({keywords: this.keyword}).then((res) => {
           const data = res.data
           this.loading = false
           this.list = data.list

@@ -35,21 +35,40 @@
               <el-input v-model="form.peoples" type="number" style="width:100px;"  :disabled="true"></el-input>
             </el-col>
           </el-form-item>
+          <el-form-item label="报名要求" prop="sign_up_required">
+            <el-col :span="12">
+              <el-input type="textarea" :rows="6" v-model="form.sign_up_required" :disabled="true"></el-input>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="评比规则" prop="score_rule">
+            <el-col :span="12">
+              <el-input type="textarea" :rows="8" v-model="form.score_rule" :disabled="true"></el-input>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="奖项设置" prop="prize_setting">
+            <el-col :span="12">
+              <el-input type="textarea" :rows="8" v-model="form.prize_setting" :disabled="true"></el-input>
+            </el-col>
+          </el-form-item>
       </el-row>
 
       <el-row class="hx-projectEdit_rows">
          <el-row class="hx-projectEdit_title">关联方信息</el-row>
 
-         <el-row>
+        <el-row v-for="(value, key) in form.school_info">
            <el-col :span="8">
-              <el-form-item label="关联学校" prop="school">
+              <el-form-item label="关联学校">
                 <el-col>
-                  <el-select v-model="form.school" placeholder="选择学校"  :disabled="true" style="width:195px;">
+                  <el-select 
+                   :disabled="true"
+                  v-model="value.name" 
+                  placeholder="选择学校" 
+                  >
                     <el-option
                       v-for="(value, key) in school"
                       :key="key"
                       :label="value"
-                      :value="key">
+                      :value="value">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -58,10 +77,18 @@
             <el-col :span="8">
               <el-form-item label="关联校区">
                 <el-col>
-                  <el-input v-model="form.school_district"  :disabled="true" style="width:195px;"></el-input>
+                  <el-select v-model="value.zone" placeholder="关联校区"  :disabled="true">
+                    <el-option
+                      v-for="(value, key) in school_zone[handleKey(value.name)]"
+                      :key="key"
+                      :label="value"
+                      :value="value">
+                    </el-option>
+                  </el-select>
                 </el-col>
               </el-form-item>
             </el-col>
+
          </el-row>
 
          <el-form-item label="关联品牌"  prop="brand">
@@ -323,15 +350,18 @@
           this.loading = false
           const info = res.data.info
           this.school = res.data.school
+          this.school_zone = res.data.school_zone
           this.form['name'] = info.name
           this.form['description'] = info.description
           this.form['peoples'] = info.peoples
-          this.form['school'] = info.school_id
-          this.form['school_district'] = info.school_district
+          this.form['school_info'] = info.school_info
           this.form['tag'] = info.tag_name
           this.form['brand'] = info.brand
           this.form['start_time'] = info.start_time
           this.form['end_time'] = info.end_time
+          this.form['sign_up_required'] = info.sign_up_required
+          this.form['score_rule'] = info.score_rule
+          this.form['prize_setting'] = info.prize_setting
 
           this.form['pr_start_time'] = info.registration.pr_start_time
           this.form['pr_end_time'] = info.registration.pr_end_time
@@ -366,6 +396,13 @@
     methods: {
       handleQrcode () {
         window.open(this.qrCode)
+      },
+      handleKey (name) {
+        for (let item in this.school) {
+          if (this.school[item] === name) {
+            return item
+          }
+        }
       }
     },
     data () {
@@ -379,12 +416,14 @@
           name: '',
           description: '',
           peoples: '',
-          school: '',
-          school_district: '',
+          school_info: [],
           brand: '',
           tag: '',
           start_time: '',
           end_time: '',
+          sign_up_required: '',
+          score_rule: '',
+          prize_setting: '',
           // 宣传报名期相关数据
           pr_start_time: '',
           pr_end_time: '',
@@ -410,6 +449,7 @@
           fap_is_exist_media: '2'
         },
         school: [],
+        school_zone: [],
         tag: [],
         links: {}
       }
@@ -488,7 +528,7 @@
   }
   .el-input.is-disabled .el-input__inner, .el-textarea.is-disabled .el-textarea__inner{
     border-color: #e4e7ed;
-    background-color: #fff;
+    /* background-color: #fff; */
     color: #333333; 
   }
   .el-form-item.is-success .el-input__inner, 

@@ -35,7 +35,6 @@ const checkStatus = function (response) {
 }
 const checkCode = function (res) {
   // 错误处理
-  console.log(res.code)
   if (res.code === 1) {
     return res
   } else {

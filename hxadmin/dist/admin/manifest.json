@@ -1,10 +1,10 @@
 {
   "admin/fonts/element-icons.ttf": "admin/fonts/element-icons.6f0a763.ttf",
-  "app.css": "admin/css/app.645f1dd7a594508a5a5bfbba2f7e935e.css",
+  "app.css": "admin/css/app.40f61d0c9d0cd57357da2ae989ff28cb.css",
   "app.js": "admin/js/app.721592ae35640f5a43a1.js",
-  "manifest.js": "admin/js/manifest.4c9cf42b93e12f36e052.js",
-  "projectEdit.js": "admin/js/projectEdit.0ace66c4cd42c45cfd67.js",
-  "projectList.js": "admin/js/projectList.dc11bcb45afdbd8d027f.js",
-  "projectView.js": "admin/js/projectView.2e2d99111af8a2699ac5.js",
-  "vendor.js": "admin/js/vendor.288165199113063bac6c.js"
+  "manifest.js": "admin/js/manifest.cb350d5b4724276549e4.js",
+  "projectEdit.js": "admin/js/projectEdit.0213365c8de8d62589c6.js",
+  "projectList.js": "admin/js/projectList.df79892c4621cdcb0327.js",
+  "projectView.js": "admin/js/projectView.fceb7d0b5b2d3f95d57c.js",
+  "vendor.js": "admin/js/vendor.616ae01a8269878257cf.js"
 }

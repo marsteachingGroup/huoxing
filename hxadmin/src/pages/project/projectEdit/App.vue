@@ -22,9 +22,24 @@
               <el-input type="textarea" :rows="10" v-model="form.description"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="报名人数上限" prop="peoples" required>
+          <el-form-item label="报名人数上限" prop="peoples" class="is-required">
             <el-col :span="12">
               <el-input v-model="form.peoples" type="number" style="width:100px;"></el-input>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="报名要求" prop="sign_up_required">
+            <el-col :span="12">
+              <el-input type="textarea" :rows="6" v-model="form.sign_up_required"></el-input>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="评比规则" prop="score_rule">
+            <el-col :span="12">
+              <el-input type="textarea" :rows="8" v-model="form.score_rule"></el-input>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="奖项设置" prop="prize_setting">
+            <el-col :span="12">
+              <el-input type="textarea" :rows="8" v-model="form.prize_setting"></el-input>
             </el-col>
           </el-form-item>
       </el-row>
@@ -32,16 +47,20 @@
       <el-row class="hx-projectEdit_rows">
          <el-row class="hx-projectEdit_title">关联方信息</el-row>
 
-         <el-row>
+         <el-row v-for="(value, key) in form.school_info">
            <el-col :span="8">
-              <el-form-item label="关联学校" prop="school">
+              <el-form-item label="关联学校">
                 <el-col>
-                  <el-select v-model="form.school" placeholder="选择学校"  style="width:195px;">
+                  <el-select 
+                  v-model="value.name" 
+                  placeholder="选择学校" 
+                  @change="value.zone = ''"
+                  >
                     <el-option
                       v-for="(value, key) in school"
                       :key="key"
                       :label="value"
-                      :value="key">
+                      :value="value">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -50,10 +69,21 @@
             <el-col :span="8">
               <el-form-item label="关联校区">
                 <el-col>
-                  <el-input v-model="form.school_district" style="width:195px;"></el-input>
+                  <el-select v-model="value.zone" placeholder="关联校区" >
+                    <el-option
+                      v-for="(value, key) in school_zone[handleKey(value.name)]"
+                      :key="key"
+                      :label="value"
+                      :value="value">
+                    </el-option>
+                  </el-select>
+                  <!-- <el-input v-model="value.zone" style="width:195px;"></el-input> -->
                 </el-col>
               </el-form-item>
             </el-col>
+
+            <i v-if="key === form.school_info.length - 1" @click="handleIcon" class="hx-projectEdit_icon el-icon-circle-plus-outline"></i>
+            <i v-else @click="handlReduce(key)" class="hx-projectEdit_icon el-icon-remove-outline"></i>
          </el-row>
 
          <el-form-item label="关联品牌"  prop="brand">
@@ -90,21 +120,23 @@
                 <el-date-picker
                   v-model="form.pr_start_time"
                   type="datetime"
-                  placeholder="开始时间">
+                  placeholder="开始时间"
+                  :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="结束时间" prop="pr_end_time" required>
+              <el-form-item label="结束时间" prop="pr_end_time" class="is-required">
                 <el-date-picker
                   v-model="form.pr_end_time"
                   type="datetime"
-                  placeholder="结束时间">
+                  placeholder="结束时间"
+                  :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="社团参与人数" prop="society_participants" required>
+              <el-form-item label="社团参与人数" prop="society_participants" class="is-required">
                 <el-input v-model="form.society_participants" type="number"></el-input>
               </el-form-item>
             </el-col>
@@ -116,16 +148,18 @@
                 <el-date-picker
                   v-model="form.stall_start_time"
                   type="datetime"
-                  placeholder="开始时间">
+                  placeholder="开始时间"
+                  :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="摆摊结束时间" prop="stall_end_time" required>
+              <el-form-item label="摆摊结束时间" prop="stall_end_time"  class="is-required">
                 <el-date-picker
                   v-model="form.stall_end_time"
                   type="datetime"
-                  placeholder="结束时间">
+                  placeholder="结束时间"
+                  :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
             </el-col>
@@ -142,16 +176,18 @@
                 <el-date-picker
                   v-model="form.check_building_start_time"
                   type="datetime"
-                  placeholder="开始时间">
+                  placeholder="开始时间"
+                  :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="扫楼结束时间" prop="check_building_end_time" required>
+              <el-form-item label="扫楼结束时间" prop="check_building_end_time"  class="is-required">
                 <el-date-picker
                   v-model="form.check_building_end_time"
                   type="datetime"
-                  placeholder="结束时间">
+                  placeholder="结束时间"
+                  :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
             </el-col>
@@ -169,16 +205,18 @@
                 <el-date-picker
                   v-model="form.tp_start_time"
                   type="datetime"
-                  placeholder="开始时间">
+                  placeholder="开始时间"
+                  :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="结束时间" prop="tp_end_time" required>
+              <el-form-item label="结束时间" prop="tp_end_time"  class="is-required">
                 <el-date-picker
                   v-model="form.tp_end_time"
                   type="datetime"
-                  placeholder="结束时间">
+                  placeholder="结束时间"
+                  :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
             </el-col>
@@ -191,7 +229,7 @@
 
           <el-row>
             <el-col :span="8">
-              <el-form-item label="参与培训人数" prop="tr_participants" required>
+              <el-form-item label="参与培训人数" prop="tr_participants"  class="is-required">
                 <el-input v-model="form.tr_participants" type="number"></el-input>
               </el-form-item>
             </el-col>
@@ -218,16 +256,18 @@
                 <el-date-picker
                   v-model="form.start_time"
                   type="datetime"
-                  placeholder="开始时间">
+                  placeholder="开始时间"
+                  :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="结束时间" prop="end_time" required>
+              <el-form-item label="结束时间" prop="end_time"  class="is-required">
                 <el-date-picker
                   v-model="form.end_time"
                   type="datetime"
-                  placeholder="结束时间">
+                  placeholder="结束时间"
+                  :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
             </el-col>
@@ -243,16 +283,18 @@
                 <el-date-picker
                   v-model="form.fap_start_time"
                   type="datetime"
-                  placeholder="开始时间">
+                  placeholder="开始时间"
+                  :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="结束时间" prop="fap_end_time" required>
+              <el-form-item label="结束时间" prop="fap_end_time"  class="is-required">
                 <el-date-picker
                   v-model="form.fap_end_time"
                   type="datetime"
-                  placeholder="结束时间">
+                  placeholder="结束时间"
+                  :picker-options="pickerOptions">
                 </el-date-picker>
               </el-form-item>
             </el-col>
@@ -265,7 +307,7 @@
 
           <el-row>
             <el-col :span="8">
-              <el-form-item label="决赛团队数" prop="teams_num" required> 
+              <el-form-item label="决赛团队数" prop="teams_num"  class="is-required"> 
                 <el-input v-model="form.teams_num" type="number"></el-input>
               </el-form-item>
             </el-col>
@@ -315,6 +357,7 @@
           this.loading = false
           const data = res.data
           this.school = data.school
+          this.school_zone = data.school_zone
           this.links = res.page_resource
         }).catch(() => {
           this.loading = false
@@ -324,16 +367,18 @@
           this.loading = false
           const info = res.data.info
           this.school = res.data.school
+          this.school_zone = res.data.school_zone
           this.form['name'] = info.name
           this.form['description'] = info.description
           this.form['peoples'] = info.peoples
-          this.form['school'] = info.school_id
-          this.form['school_district'] = info.school_district
           this.form['tag'] = info.tag_name
           this.form['brand'] = info.brand
           this.form['start_time'] = info.start_time
           this.form['end_time'] = info.end_time
-
+          this.form['sign_up_required'] = info.sign_up_required
+          this.form['score_rule'] = info.score_rule
+          this.form['prize_setting'] = info.prize_setting
+          this.form['school_info'] = info.school_info
           this.form['pr_start_time'] = info.registration.pr_start_time
           this.form['pr_end_time'] = info.registration.pr_end_time
           this.form['stall_start_time'] = info.registration.stall_start_time
@@ -373,13 +418,15 @@
               'name': form.name,
               'description': form.description,
               'peoples': form.peoples,
-              'school_id': form.school,
-              'school_district': form.school_district,
+              'school_info': form.school_info,
               'tag_name': form.tag,
               'tag_sub_name': '标签',
               'brand': form.brand,
               'start_time': form.start_time,
               'end_time': form.end_time,
+              'sign_up_required': form.sign_up_required,
+              'score_rule': form.score_rule,
+              'prize_setting': form.prize_setting,
               'registration': {
                 'pr_start_time': form.pr_start_time,
                 'pr_end_time': form.pr_end_time,
@@ -434,6 +481,22 @@
         this.tagChoose = checkList
         this.form.tag = checkList.join(',')
         this.dialog = false
+      },
+      handleIcon () {
+        this.form.school_info.push({
+          'name': '',
+          'zone': ''
+        })
+      },
+      handlReduce (key) {
+        this.form.school_info.splice(key, 1)
+      },
+      handleKey (name) {
+        for (let item in this.school) {
+          if (this.school[item] === name) {
+            return item
+          }
+        }
       }
     },
     data () {
@@ -534,13 +597,10 @@
         tagChoose: [],
         rules: {
           name: [
-            { required: true, message: '请填写项目名称', trigger: 'change' }
+            { required: true, message: '请填写项目名称', trigger: 'blur' }
           ],
           peoples: [
-            { validator: checkPeople, trigger: 'change' }
-          ],
-          school: [
-            { required: true, message: '请选择关联学校', trigger: 'change' }
+            { validator: checkPeople, trigger: 'blur' }
           ],
           pr_start_time: [
             { required: true, message: '请选择开始时间', trigger: 'change' }
@@ -591,22 +651,31 @@
             { required: true, message: '请选择标签', trigger: 'change' }
           ],
           brand: [
-            { required: true, message: '请填写关联品牌', trigger: 'change' }
+            { required: true, message: '请填写关联品牌', trigger: 'blur' }
           ],
           stall_site: [
-            { required: true, message: '请填写摆摊场地', trigger: 'change' }
+            { required: true, message: '请填写摆摊场地', trigger: 'blur' }
           ],
           training_site: [
-            { required: true, message: '请填写培训场地', trigger: 'change' }
+            { required: true, message: '请填写培训场地', trigger: 'blur' }
           ],
           lector: [
-            { required: true, message: '请填写培训讲师', trigger: 'change' }
+            { required: true, message: '请填写培训讲师', trigger: 'blur' }
           ],
           finals_site: [
-            { required: true, message: '请填写决赛场地', trigger: 'change' }
+            { required: true, message: '请填写决赛场地', trigger: 'blur' }
           ],
           judge: [
-            { required: true, message: '请填写决赛评委', trigger: 'change' }
+            { required: true, message: '请填写决赛评委', trigger: 'blur' }
+          ],
+          sign_up_required: [
+            { required: true, message: '请填写报名要求', trigger: 'blur' }
+          ],
+          score_rule: [
+            { required: true, message: '请填写评比规则', trigger: 'blur' }
+          ],
+          prize_setting: [
+            { required: true, message: '请填写奖项设置', trigger: 'blur' }
           ]
         },
         form: {
@@ -614,12 +683,19 @@
           name: '',
           description: '',
           peoples: '',
-          school: '',
-          school_district: '',
+          school_info: [
+            {
+              'name': '',
+              'zone': ''
+            }
+          ],
           brand: '',
           tag: '',
           start_time: '',
           end_time: '',
+          sign_up_required: '',
+          score_rule: '',
+          prize_setting: '',
           // 宣传报名期相关数据
           pr_start_time: '',
           pr_end_time: '',
@@ -645,8 +721,14 @@
           fap_is_exist_media: '2'
         },
         school: [],
+        school_zone: [],
         tag: [],
-        links: {}
+        links: {},
+        pickerOptions: {
+          disabledDate (time) {
+            return time.getTime() < Date.now() - 8.64e7
+          }
+        }
       }
     }
   }
@@ -713,6 +795,11 @@
       background-color: #fff;
       color: #333333; 
     }
+  }
+  &_icon{
+    font-size: 22px;
+    margin-top: 10px;
+    cursor: pointer;
   }
   .el-form-item.is-success .el-input__inner, 
   .el-form-item.is-success .el-input__inner:focus, 

@@ -16,7 +16,7 @@
 				<span class="config-content_word">学校名称</span>
 				<div class="config-content_content">
 					<select v-model="school" class="config-content_text" @change="school_zone = ''">  
-						<option value="" disabled></option>                                       
+						<option value="" disabled style="display: none;"></option>                                       
 						<option v-for="(value, key) in info.school" :value="value">{{value.school_name}}</option>             
 					</select>
 					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
@@ -30,7 +30,7 @@
 				<span class="config-content_word">校区名称</span>
 				<div class="config-content_content">
 					<select v-model="school_zone" class="config-content_text">  
-						<option value="" disabled></option>                                       
+						<option value="" disabled style="display: none;"></option>                                       
 						<option v-for="(value, key) in school.school_zone" :value="key">{{value}}</option>             
 					</select>
 					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
@@ -65,7 +65,7 @@
 				<span class="config-content_word">毕业学历</span>
 				<div class="config-content_content">
 					<select v-model="degree_type" class="config-content_text">   
-						<option value="" disabled></option>                                           
+						<option value="" disabled style="display: none;"></option>                                           
 						<option v-for="(value, key) in info.degree_type" :value="value.type_id">{{value.name}}</option>             
 					</select>
 					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
@@ -87,7 +87,7 @@
 		</div>
 
 		<div class="config-content_step">
-		  <div class="config-content_circular"></div>
+		  <div class="config-content_circular" @click="handleBasic"></div>
 		  <div class="config-content_circular config-content_current"></div>
 		  <div class="config-content_circular"></div>
 		  <div class="config-content_circular"></div>
@@ -127,6 +127,8 @@ export default {
 			updateForm: UPDATE_FORM
 		}),
 		handleNext () {
+			let time = this.entrance_date.split('-')
+			let myDate = new Date()
 			if (this.school === '') {
 				alert('请选择学校名称')
 			} else if (this.school_zone === '') {
@@ -139,6 +141,8 @@ export default {
 				alert('请选择毕业学历')
 			} else if (this.entrance_date === '') {
 				alert('请选择入学年月')
+			} else if ((Number(myDate.getFullYear()) - Number(time[0])) > 5) {
+				alert('入学日期必须5年内')
 			} else {
 				this.updateForm({
 					key: 'school',
@@ -166,6 +170,9 @@ export default {
 				})
 				this.$router.push('/personal')
 			}
+		},
+		handleBasic () {
+			this.$router.push('/basic')
 		}
 	},
 	computed: {

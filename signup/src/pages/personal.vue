@@ -57,7 +57,7 @@
 				<span class="config-content_word">血型(选填)</span>
 				<div class="config-content_content">
 					<select v-model="blood_type" class="config-content_text">         
-						<option value="" disabled></option>                               
+						<option value="" disabled style="display: none;"></option>                               
 						<option v-for="(value, key) in info.blood_type" :value="value">{{value}}</option>             
 					</select>
 					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
@@ -78,8 +78,8 @@
 		</div>
 
 		<div class="config-content_step">
-		  <div class="config-content_circular"></div>
-		  <div class="config-content_circular"></div>
+		  <div class="config-content_circular" @click="handleBasic"></div>
+		  <div class="config-content_circular" @click="handleSchool"></div>
 		  <div class="config-content_circular config-content_current"></div>
 		  <div class="config-content_circular"></div>
 		</div>
@@ -178,6 +178,10 @@ export default {
 						key: 'loaded',
 						value: false
 					})
+					this.updateKey({
+						key: 'info',
+						value: ''
+					})
 					// 清空表单
 					this.updateKey({
 						key: 'form',
@@ -202,6 +206,12 @@ export default {
 					this.$router.push('/success')
 				}
 			})
+		},
+		handleBasic () {
+			this.$router.push('/basic')
+		},
+		handleSchool () {
+			this.$router.push('/school')
 		}
 	},
 	computed: {

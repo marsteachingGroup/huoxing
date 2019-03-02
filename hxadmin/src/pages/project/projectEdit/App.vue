@@ -3,7 +3,7 @@
     <el-row class="hx-projectEdit_header">
       <div class="hx-projectEdit_header-text">
         <span v-if="id === ''">添加比赛</span>
-        <span v-else style="font-weight: bold;">比赛编码：{{id}}</span>
+        <span v-else style="font-weight: bold;">比赛编码：{{contestNo}}</span>
       </div>
       <div class="hx-projectEdit_header-line"></div>
     </el-row>
@@ -81,9 +81,8 @@
                 </el-col>
               </el-form-item>
             </el-col>
-
+            <i v-if="form.school_info.length > 1"  @click="handlReduce(key)" class="hx-projectEdit_icon el-icon-remove-outline"></i>
             <i v-if="key === form.school_info.length - 1" @click="handleIcon" class="hx-projectEdit_icon el-icon-circle-plus-outline"></i>
-            <i v-else @click="handlReduce(key)" class="hx-projectEdit_icon el-icon-remove-outline"></i>
          </el-row>
 
          <el-form-item label="关联品牌"  prop="brand">
@@ -136,7 +135,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="社团参与人数" prop="society_participants" class="is-required">
+              <el-form-item label="社团参与数" prop="society_participants" class="is-required">
                 <el-input v-model="form.society_participants" type="number"></el-input>
               </el-form-item>
             </el-col>
@@ -366,6 +365,7 @@
         getPojectEdit({id: this.id}).then((res) => {
           this.loading = false
           const info = res.data.info
+          this.contestNo = info.contest_no
           this.school = res.data.school
           this.school_zone = res.data.school_zone
           this.form['name'] = info.name
@@ -373,36 +373,36 @@
           this.form['peoples'] = info.peoples
           this.form['tag'] = info.tag_name
           this.form['brand'] = info.brand
-          this.form['start_time'] = info.start_time
-          this.form['end_time'] = info.end_time
+          this.form['start_time'] = new Date(info.start_time)
+          this.form['end_time'] = new Date(info.end_time)
           this.form['sign_up_required'] = info.sign_up_required
           this.form['score_rule'] = info.score_rule
           this.form['prize_setting'] = info.prize_setting
           this.form['school_info'] = info.school_info
-          this.form['pr_start_time'] = info.registration.pr_start_time
-          this.form['pr_end_time'] = info.registration.pr_end_time
-          this.form['stall_start_time'] = info.registration.stall_start_time
-          this.form['stall_end_time'] = info.registration.stall_end_time
-          this.form['check_building_start_time'] = info.registration.check_building_start_time
-          this.form['check_building_end_time'] = info.registration.check_building_end_time
+          this.form['pr_start_time'] = new Date(info.registration.pr_start_time)
+          this.form['pr_end_time'] = new Date(info.registration.pr_end_time)
+          this.form['stall_start_time'] = new Date(info.registration.stall_start_time)
+          this.form['stall_end_time'] = new Date(info.registration.stall_end_time)
+          this.form['check_building_start_time'] = new Date(info.registration.check_building_start_time)
+          this.form['check_building_end_time'] = new Date(info.registration.check_building_end_time)
           this.form['society_participants'] = info.registration.society_participants
           this.form['stall_site'] = info.registration.stall_site
 
-          this.form['tp_start_time'] = info.training.tp_start_time
-          this.form['tp_end_time'] = info.training.tp_end_time
+          this.form['tp_start_time'] = new Date(info.training.tp_start_time)
+          this.form['tp_end_time'] = new Date(info.training.tp_end_time)
           this.form['training_site'] = info.training.training_site
           this.form['tr_participants'] = info.training.tr_participants
           this.form['lector'] = info.training.lector
           this.form['tp_is_exist_media'] = info.training.tp_is_exist_media
 
-          this.form['fap_start_time'] = info.award.fap_start_time
-          this.form['fap_end_time'] = info.award.fap_end_time
+          this.form['fap_start_time'] = new Date(info.award.fap_start_time)
+          this.form['fap_end_time'] = new Date(info.award.fap_end_time)
           this.form['finals_site'] = info.award.finals_site
           this.form['teams_num'] = info.award.teams_num
           this.form['judge'] = info.award.judge
           this.form['fap_is_exist_media'] = info.award.fap_is_exist_media
 
-          this.tagChoose = info.tag_name.split(',')
+          // this.tagChoose = info.tag_name.split(',')
           this.links = res.page_resource
         }).catch(() => {
           this.loading = false
@@ -478,7 +478,7 @@
         })
       },
       handleDialog (checkList) {
-        this.tagChoose = checkList
+        // this.tagChoose = checkList
         this.form.tag = checkList.join(',')
         this.dialog = false
       },
@@ -513,17 +513,17 @@
         if (value === '') {
           return callback(new Error('请选择结束时间'))
         }
-        if (value < this.form.pr_start_time && this.form.pr_start_time !== '') {
+        if ((value < this.form.pr_start_time) && this.form.pr_start_time !== '') {
           return callback(new Error('结束时间不能小于开始时间'))
         }
         return callback()
       }
       const checkSocietyParticipants = (rule, value, callback) => {
         if (value === '') {
-          return callback(new Error('社团人数不能为空'))
+          return callback(new Error('社团参与数不能为空'))
         }
         if (value !== '' && value <= 0) {
-          return callback(new Error('社团人数必须大于0'))
+          return callback(new Error('社团参与数必须大于0'))
         }
         return callback()
       }
@@ -606,7 +606,7 @@
             { required: true, message: '请选择开始时间', trigger: 'change' }
           ],
           pr_end_time: [
-            { validator: checkPretime, trigger: 'change' }
+            { validator: checkPretime, trigger: 'blur' }
           ],
           society_participants: [
             { validator: checkSocietyParticipants, trigger: 'change' }
@@ -724,6 +724,7 @@
         school_zone: [],
         tag: [],
         links: {},
+        contestNo: '',
         pickerOptions: {
           disabledDate (time) {
             return time.getTime() < Date.now() - 8.64e7

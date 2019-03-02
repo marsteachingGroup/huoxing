@@ -57,10 +57,17 @@ const postTagAdd = (data, config) => {
   return ajax.post(url, data, config)
 }
 /**
- * 标签列表
+ * 删除项目
  **/
 const postPojectDelete = (data, config) => {
   let url = apiConfig['api'].POST_POJECT_DELETE
+  return ajax.post(url, data, config)
+}
+/**
+ * 删除标签
+ **/
+const postTagDelete = (data, config) => {
+  let url = apiConfig['api'].POST_TAG_DELETE
   return ajax.post(url, data, config)
 }
 export {
@@ -72,5 +79,6 @@ export {
   getPojectView,
   getTagList,
   postTagAdd,
-  postPojectDelete
+  postPojectDelete,
+  postTagDelete
 }

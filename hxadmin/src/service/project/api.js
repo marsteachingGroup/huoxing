@@ -22,7 +22,9 @@ const api = {
   // 标签列表
   GET_TAG_LIST: `${API_URL_SUFFIX}/tag`,
   // 添加标签
-  POST_TAG_ADD: `${API_URL_SUFFIX}/tag/addPost`
+  POST_TAG_ADD: `${API_URL_SUFFIX}/tag/addPost`,
+  // 删除标签
+  POST_TAG_DELETE: `${API_URL_SUFFIX}/tag/delete`
 }
 
 export {

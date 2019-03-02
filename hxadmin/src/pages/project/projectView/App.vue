@@ -3,7 +3,7 @@
     <el-row class="hx-projectEdit_header">
       <div class="hx-projectEdit_header-text">
         <span v-if="id === ''">添加比赛</span>
-        <span v-else style="font-weight: bold;">比赛编码：{{id}}</span>
+        <span v-else style="font-weight: bold;">比赛编码：{{contestNo}}</span>
       </div>
       <div class="hx-projectEdit_header-line"></div>
     </el-row>
@@ -138,7 +138,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="社团参与人数" prop="society_participants" required>
+              <el-form-item label="社团参与数" prop="society_participants" required>
                 <el-input v-model="form.society_participants" :disabled="true" type="number"></el-input>
               </el-form-item>
             </el-col>
@@ -349,6 +349,7 @@
         getPojectView({id: this.id}).then((res) => {
           this.loading = false
           const info = res.data.info
+          this.contestNo = info.contest_no
           this.school = res.data.school
           this.school_zone = res.data.school_zone
           this.form['name'] = info.name
@@ -451,6 +452,7 @@
         school: [],
         school_zone: [],
         tag: [],
+        contestNo: '',
         links: {}
       }
     }

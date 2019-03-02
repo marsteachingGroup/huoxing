@@ -2,9 +2,9 @@
   "admin/fonts/element-icons.ttf": "admin/fonts/element-icons.6f0a763.ttf",
   "app.css": "admin/css/app.40f61d0c9d0cd57357da2ae989ff28cb.css",
   "app.js": "admin/js/app.721592ae35640f5a43a1.js",
-  "manifest.js": "admin/js/manifest.cb350d5b4724276549e4.js",
-  "projectEdit.js": "admin/js/projectEdit.0213365c8de8d62589c6.js",
-  "projectList.js": "admin/js/projectList.df79892c4621cdcb0327.js",
-  "projectView.js": "admin/js/projectView.fceb7d0b5b2d3f95d57c.js",
+  "manifest.js": "admin/js/manifest.8dfb245e4eb36f60143a.js",
+  "projectEdit.js": "admin/js/projectEdit.21b62b0d7baa33b8e397.js",
+  "projectList.js": "admin/js/projectList.cd67840d7f6e993c232d.js",
+  "projectView.js": "admin/js/projectView.faf3bc2a778335ee0c4a.js",
   "vendor.js": "admin/js/vendor.616ae01a8269878257cf.js"
 }

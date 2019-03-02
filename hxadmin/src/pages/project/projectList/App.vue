@@ -24,9 +24,11 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="school_name"
         label="关联学校"
-        width="120">
+        width="220">
+        <template slot-scope="scope">
+          <p v-for="(value, key) in scope.row.school_info">{{value.name}}-{{value.zone}}</p>
+        </template>
       </el-table-column>
       <el-table-column
         prop="brand"
@@ -82,7 +84,8 @@
           this.loading = false
           this.list = data.list
           this.links = res.page_resource
-        }).catch(() => {
+        }).catch((res) => {
+          this.links = res.page_resource
           this.loading = false
         })
       },

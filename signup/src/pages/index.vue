@@ -6,11 +6,11 @@
 	</div>
 		<input 
 		v-if="inputBol" 
-		v-model="id" 
+		v-model="ano" 
 		class="home-input"
-		placeholder="请输入比赛id" type="text">
+		placeholder="请输入比赛编号" type="text">
 		<div :class="{'home-input_aid': !inputBol}" class="home-button" @click="handleStart">报名</div>
-		<Loading v-if="Loading"></Loading>
+		<Loading v-if="loading"></Loading>
   </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
 		return {
 			inputBol: false,
 			id: '',
-			Loading: false
+			ano: ''
 		}
 	},
 	created () {
@@ -41,12 +41,13 @@ export default {
 			value: ''
 		})
 		let params = formatUrlParams(location.search)
-    if (!params.aid || params.aid === '') {
+    	if (!params.ano || params.ano === '') {
 			this.inputBol = true
 		} else {
+			this.id = params.ano
 			this.updateKey({
 				key: 'aid',
-				value: params.aid
+				value: params.ano
 			})
 		}
 	},
@@ -56,17 +57,15 @@ export default {
 			getData: 'getData'
 		}),
 		handleStart () {
-			if (this.aid !== '') {
-				this.Loading = true
+			if (this.id !== '') {
 				this.getData()
-			} else if (this.id === '') {
+			} else if (this.ano === '') {
 				alert('请输入比赛id')
 			} else {
 				this.updateKey({
 					key: 'aid',
-					value: this.id
+					value: this.ano
 				})
-				this.Loading = true
 				this.getData()
 			}
 		}
@@ -75,7 +74,8 @@ export default {
 		...mapGetters([
 			'loaded',
 			'info',
-			'aid'
+			'aid',
+			'loading'
 		])
 	},
 	watch: {

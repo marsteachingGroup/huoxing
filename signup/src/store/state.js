@@ -1,5 +1,6 @@
 export default {
   loaded: false,
+  loading: false,
   info: '',
   aid: '',
   form: {

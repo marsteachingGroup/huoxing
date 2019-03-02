@@ -9,12 +9,15 @@ import {
   from './mutation-types'
 export default {
   getData ({ commit, state }) {
-    axios.get('/api/activity/index/detail?aid=' + state.aid).then((response) => {
+    commit(GET_UPDATE_KEY, {key: 'loading', value: true})
+    axios.get('/api/activity/index/detail?ano=' + state.aid).then((response) => {
       const data = response.data.data
       const code = response.data.code
       if (code === 0) {
+        commit(GET_UPDATE_KEY, {key: 'loading', value: false})
         alert(response.data.msg)
       } else {
+        commit(GET_UPDATE_KEY, {key: 'loading', value: false})
         commit(UPDATE_INFO, { data })
         commit(GET_UPDATE_KEY, {key: 'loaded', value: true})
       }

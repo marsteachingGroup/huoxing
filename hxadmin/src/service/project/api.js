@@ -24,7 +24,9 @@ const api = {
   // 添加标签
   POST_TAG_ADD: `${API_URL_SUFFIX}/tag/addPost`,
   // 删除标签
-  POST_TAG_DELETE: `${API_URL_SUFFIX}/tag/delete`
+  POST_TAG_DELETE: `${API_URL_SUFFIX}/tag/delete`,
+  // 营销大赛报名列表
+  GET_ENROLL_RECORD: `${API_URL_SUFFIX}/project/enroll_record`
 }
 
 export {

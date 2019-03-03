@@ -25,8 +25,16 @@ const projectView = (r) => {
     r(projectView.default)
   }, showLoadError, 'projectView')
 }
+// 营销项目查看
+const enrollRecord = (r) => {
+  require.ensure([], function (require) {
+    let enrollRecord = require('./project/enrollRecord/index')
+    r(enrollRecord.default)
+  }, showLoadError, 'enrollRecord')
+}
 export default {
   projectList,
   projectEdit,
-  projectView
+  projectView,
+  enrollRecord
 }

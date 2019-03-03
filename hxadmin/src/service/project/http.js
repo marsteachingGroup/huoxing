@@ -70,6 +70,13 @@ const postTagDelete = (data, config) => {
   let url = apiConfig['api'].POST_TAG_DELETE
   return ajax.post(url, data, config)
 }
+/**
+ * 删除标签
+ **/
+const getEnrollRecord = (data, config) => {
+  let url = apiConfig['api'].GET_ENROLL_RECORD
+  return ajax.get(url, data, config)
+}
 export {
   getPojectList,
   getPojectAdd,
@@ -80,5 +87,6 @@ export {
   getTagList,
   postTagAdd,
   postPojectDelete,
-  postTagDelete
+  postTagDelete,
+  getEnrollRecord
 }

@@ -31,7 +31,7 @@
 				<div class="config-content_content">
 					<select v-model="school_zone" class="config-content_text">  
 						<option value="" disabled style="display: none;"></option>                                       
-						<option v-for="(value, key) in school.school_zone" :value="key">{{value}}</option>             
+						<option v-for="(value, key) in school.school_zone" :value="value">{{value}}</option>             
 					</select>
 					<img class="config-content_right" src="../assets/images/icon/right.png" alt="">
 				</div>

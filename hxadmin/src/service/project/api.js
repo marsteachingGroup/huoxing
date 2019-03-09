@@ -26,7 +26,19 @@ const api = {
   // 删除标签
   POST_TAG_DELETE: `${API_URL_SUFFIX}/tag/delete`,
   // 营销大赛报名列表
-  GET_ENROLL_RECORD: `${API_URL_SUFFIX}/project/enroll_record`
+  GET_ENROLL_RECORD: `${API_URL_SUFFIX}/project/enroll_record`,
+  // 删除报名信息
+  POST_RECORD_DELETE: `${API_URL_SUFFIX}/record/delete`,
+  // 审核报名信息
+  POST_RECORD_CHECK: `${API_URL_SUFFIX}/record/check`,
+  // 营销大赛管理/查看比赛/报名信息，Excel导出
+  GET_EXCEL: `/admin/activity_enroll_record/export_excel`,
+  // 营销大赛管理/学生报名信息，Excel导出
+  GET_EXCEL_EX: `/admin/activity_enroll_record/export_excel_ex`,
+  // 获取团队信息
+  GET_ENROLL_TEAM: `${API_URL_SUFFIX}/project/get_enroll_team`,
+  // 修改团队信息
+  POST_ENROLL_TEAM: `${API_URL_SUFFIX}/project/modify_enroll_team`
 }
 
 export {

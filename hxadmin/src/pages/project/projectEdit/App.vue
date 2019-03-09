@@ -42,6 +42,18 @@
               <el-input type="textarea" :rows="8" v-model="form.prize_setting"></el-input>
             </el-col>
           </el-form-item>
+          <el-form-item label="比赛级别" prop="level">
+            <el-select 
+              v-model="form.level"
+              placeholder="请选择比赛级别">
+                <el-option
+                  v-for="(value, key) in levelList"
+                  :key="key"
+                  :label="value"
+                  :value="key">
+                </el-option>
+              </el-select>
+          </el-form-item>
       </el-row>
 
       <el-row class="hx-projectEdit_rows">
@@ -355,6 +367,7 @@
         getPojectAdd().then((res) => {
           this.loading = false
           const data = res.data
+          this.levelList = data.level
           this.school = data.school
           this.school_zone = data.school_zone
           this.links = res.page_resource
@@ -365,10 +378,12 @@
         getPojectEdit({id: this.id}).then((res) => {
           this.loading = false
           const info = res.data.info
+          this.levelList = res.data.level
           this.contestNo = info.contest_no
           this.school = res.data.school
           this.school_zone = res.data.school_zone
           this.form['name'] = info.name
+          this.form['level'] = info.level
           this.form['description'] = info.description
           this.form['peoples'] = info.peoples
           this.form['tag'] = info.tag_name
@@ -421,6 +436,7 @@
               'school_info': form.school_info,
               'tag_name': form.tag,
               'tag_sub_name': '标签',
+              'level': form.level,
               'brand': form.brand,
               'start_time': form.start_time,
               'end_time': form.end_time,
@@ -595,6 +611,7 @@
         loading: false,
         dialog: false,
         tagChoose: [],
+        levelList: {},
         rules: {
           name: [
             { required: true, message: '请填写项目名称', trigger: 'blur' }
@@ -676,6 +693,9 @@
           ],
           prize_setting: [
             { required: true, message: '请填写奖项设置', trigger: 'blur' }
+          ],
+          level: [
+            { required: true, message: '请选择比赛级别', trigger: 'change' }
           ]
         },
         form: {
@@ -689,6 +709,7 @@
               'zone': ''
             }
           ],
+          level: '',
           brand: '',
           tag: '',
           start_time: '',

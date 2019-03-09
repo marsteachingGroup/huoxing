@@ -54,10 +54,27 @@
                 <el-input type="textarea" :rows="8" v-model="form.prize_setting" :disabled="true"></el-input>
               </el-col>
             </el-form-item>
+            <el-form-item label="比赛级别" prop="level">
+              <el-select 
+                v-model="form.level"
+                :disabled="true"
+                placeholder="请选择比赛级别">
+                  <el-option
+                    v-for="(value, key) in levelList"
+                    :key="key"
+                    :label="value"
+                    :value="key">
+                  </el-option>
+                </el-select>
+            </el-form-item>
           </div>
           <div v-if="active === 'list'">
               <div v-if="list === ''" style="text-align: center;">报名信息为空...</div>
               <div v-else>
+                <div style="text-align: right;">
+                  <el-button @click.stop="handleExport" style="margin-bottom: 30px;" type="primary" size="small">导出Excel</el-button>
+                </div>
+                
                <el-table
                   class="hx-projectEdit_table"
                   border
@@ -71,6 +88,11 @@
                     width="180">
                   </el-table-column>
                   <el-table-column
+                    prop="team_no"
+                    label="团队编号"
+                    width="150">
+                  </el-table-column>
+                  <el-table-column
                     label="角色"
                     width="100">
                     <template slot-scope="scope">
@@ -81,7 +103,7 @@
                   <el-table-column
                     prop="name"
                     label="姓名"
-                    width="180">
+                    width="120">
                   </el-table-column>
                   <el-table-column
                     width="100"
@@ -99,7 +121,25 @@
                   <el-table-column
                     prop="phone"
                     label="电话"
-                    width="180">
+                    width="150">
+                  </el-table-column>
+                  <el-table-column
+                    label="状态"
+                    width="80">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.status === '1'">未审核</span>
+                      <span v-else-if="scope.row.status === '2'">已审核</span>
+                      <span v-else>未填写</span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                    label="操作"
+                    width="220">
+                    <template slot-scope="scope">
+                      <el-button v-if="scope.row.status === '1'" @click.stop="handleStatus(scope.row)"  type="primary" size="small">审核</el-button>
+                      <!-- <el-button v-if="scope.row.status === '1'" @click.stop="handleEdit(scope.row)"  type="primary" size="small">修改</el-button> -->
+                      <el-button v-if="scope.row.role_type === '1'" @click.stop="handleDelete(scope.row)"  type="danger" size="small">删除</el-button>
+                    </template>
                   </el-table-column>
                 </el-table>
               </div>
@@ -423,13 +463,30 @@
       </el-col>
 
       <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="handleTeam">团队变更</el-button>
         <el-button type="primary" @click="dialogInfo = false">返 回</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+      title="团队变更"
+      :visible.sync="dialogTeam"
+      width="50%">
+      <el-col class="hx-projectEdit_info" :span="24">团队编号：{{team.team_no}}</el-col>
+      <el-col class="hx-projectEdit_info" :span="24">团队名称：<el-input v-model="team.team_name" style="width: 300px;" maxlength="20"></el-input></el-col>
+      <el-col class="hx-projectEdit_info" :span="24"><span style="vertical-align: top;">队长变更：</span>
+        <el-radio-group v-model="leader">
+          <el-radio  class="hx-projectEdit_radio" v-for="(value, key) in team.team" :label="value.record_id">{{value.name}}</el-radio>
+        </el-radio-group>
+      </el-col>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogTeam = false">返 回</el-button>
+        <el-button type="primary" @click="handleSave">保 存</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
-  import { getPojectView } from '@/service/project/http'
+  import { getPojectView, postRecordDelete, postRecordCheck, getEnrollRecordTeam, postEnrollRecord } from '@/service/project/http'
   import { formatUrlParams } from '@/utils/utils'
   export default {
     created () {
@@ -439,6 +496,89 @@
       if (this.id === '') {
         this.$message.error('找不到项目ID')
       } else {
+        this.getData()
+      }
+    },
+    methods: {
+      handleTeam () {
+        this.loading = true
+        getEnrollRecordTeam({team_name: this.info.team_name, team_no: this.info.team_no}).then((res) => {
+          this.loading = false
+          this.team = res.data.list
+          this.leader = ''
+          for (let item in this.team.team) {
+            if (this.team.team[item].role_type === '2') {
+              this.leader = this.team.team[item].record_id
+            }
+          }
+          this.dialogInfo = false
+          this.dialogTeam = true
+        }).catch(() => {
+          this.loading = false
+        })
+      },
+      handleSave () {
+        if (this.team.team_name === '') {
+          this.$message({
+            message: '团队名称不能为空',
+            type: 'warning'
+          })
+        } else {
+          this.loading = true
+          postEnrollRecord({
+            team_name: this.team.team_name,
+            team_no: this.team.team_no,
+            record_id: this.leader
+          }).then((res) => {
+            this.dialogTeam = false
+            this.getData()
+          }).catch(() => {
+            this.loading = false
+          })
+        }
+      },
+      handleEdit (row) {
+      },
+      handleExport () {
+        window.open('/admin/activity_enroll_record/export_excel?activity_id=' + this.id)
+      },
+      handleStatus (row) {
+        this.loading = true
+        postRecordCheck({record_id: row.record_id}).then((res) => {
+          this.getData()
+        }).catch(() => {
+          this.loading = false
+        })
+      },
+      handleDelete (row) {
+        this.$confirm('确定删除该报名信息?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.loading = true
+          postRecordDelete({record_id: row.record_id}).then((res) => {
+            this.getData()
+          }).catch(() => {
+            this.loading = false
+          })
+        })
+      },
+      handleQrcode () {
+        window.open(this.qrCode)
+      },
+      handleKey (name) {
+        for (let item in this.school) {
+          if (this.school[item] === name) {
+            return item
+          }
+        }
+      },
+      handleRow (row) {
+        this.dialogInfo = true
+        this.info = row
+      },
+      getData () {
         getPojectView({id: this.id}).then((res) => {
           this.loading = false
           const info = res.data.info
@@ -457,8 +597,10 @@
 
           this.contestNo = info.contest_no
           this.school = res.data.school
+          this.levelList = res.data.level
           this.school_zone = res.data.school_zone
           this.form['name'] = info.name
+          this.form['level'] = info.level
           this.form['description'] = info.description
           this.form['peoples'] = info.peoples
           this.form['school_info'] = info.school_info
@@ -500,34 +642,23 @@
         })
       }
     },
-    methods: {
-      handleQrcode () {
-        window.open(this.qrCode)
-      },
-      handleKey (name) {
-        for (let item in this.school) {
-          if (this.school[item] === name) {
-            return item
-          }
-        }
-      },
-      handleRow (row) {
-        this.dialogInfo = true
-        this.info = row
-      }
-    },
     data () {
       return {
         id: '',
         loading: false,
+        dialogTeam: false,
         dialogInfo: false,
         active: 'info',
         rules: {},
+        levelList: {},
+        team: {},
         qrCode: '',
         list: {},
+        leader: '',
         form: {
           // 基础信息
           name: '',
+          level: '',
           description: '',
           peoples: '',
           school_info: [],
@@ -661,6 +792,10 @@
         color: #fff;
       }
     }
+  }
+  &_radio{
+    display: block;
+    margin-bottom: 20px;
   }
   .el-input.is-disabled .el-input__inner, .el-textarea.is-disabled .el-textarea__inner{
     border-color: #e4e7ed;

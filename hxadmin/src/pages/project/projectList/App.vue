@@ -10,11 +10,11 @@
       class="hx-projectList_table"
       border
       style="width: 100%">
-      <el-table-column
+      <!-- <el-table-column
         prop="id"
         label="ID"
         width="100">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         prop="name"
         label="项目标题"
@@ -24,17 +24,27 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="contest_no"
+        label="比赛编号"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="level_name"
+        label="比赛级别"
+        width="120">
+      </el-table-column>
+      <!-- <el-table-column
         label="关联学校"
         width="220">
         <template slot-scope="scope">
           <p v-for="(value, key) in scope.row.school_info">{{value.name}}-{{value.zone}}</p>
         </template>
-      </el-table-column>
-      <el-table-column
+      </el-table-column> -->
+      <!-- <el-table-column
         prop="brand"
         label="关联品牌"
         width="160">
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column
         prop="status_text"
         label="状态"

@@ -7,6 +7,7 @@
       <div class="hx-projectList_search-rows"><span class="hx-projectList_word">姓名：</span><el-input  class="hx-projectList_input" size="small" v-model="name" placeholder="请输入姓名"></el-input></div>
       <el-button type="primary"  size="small" icon="el-icon-circle-plus-outline" @click="handleSearch">查询</el-button>
       <el-button type="primary"  size="small" icon="el-icon-error" @click="handleClear">清空</el-button>
+      <el-button @click.stop="handleExport" type="primary" size="small">导出Excel</el-button>
     </el-row>
     <el-table
       border
@@ -56,7 +57,7 @@
     <div  class="hx-projectList_page">
        <el-pagination
         background
-        layout="prev, pager, next"
+        layout="total, prev, pager, next"
         :page-size="size"
         @current-change="current"
         :total="total">
@@ -163,6 +164,9 @@
         this.school_name = ''
         this.name = ''
         this.handleSearch()
+      },
+      handleExport () {
+        window.open('/admin/activity_enroll_record/export_excel_ex?keywords=' + this.keywords + '&team_no=' + this.team_no + '&school_name=' + this.school_name + '&name=' + this.name)
       }
     }
   }

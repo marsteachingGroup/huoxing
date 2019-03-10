@@ -38,7 +38,9 @@ const api = {
   // 获取团队信息
   GET_ENROLL_TEAM: `${API_URL_SUFFIX}/project/get_enroll_team`,
   // 修改团队信息
-  POST_ENROLL_TEAM: `${API_URL_SUFFIX}/project/modify_enroll_team`
+  POST_ENROLL_TEAM: `${API_URL_SUFFIX}/project/modify_enroll_team`,
+  // 修改个人信息
+  POST_ENROLL_RECORD: `${API_URL_SUFFIX}/project/modify_enroll_record`
 }
 
 export {

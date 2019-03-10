@@ -119,6 +119,13 @@ const postEnrollRecord = (data, config) => {
   let url = apiConfig['api'].POST_ENROLL_TEAM
   return ajax.post(url, data, config)
 }
+/**
+ * 修改个人信息
+ **/
+const postEnrollRecordMember = (data, config) => {
+  let url = apiConfig['api'].POST_ENROLL_RECORD
+  return ajax.post(url, data, config)
+}
 export {
   getPojectList,
   getPojectAdd,
@@ -136,5 +143,6 @@ export {
   getExcel,
   getExcelEx,
   getEnrollRecordTeam,
-  postEnrollRecord
+  postEnrollRecord,
+  postEnrollRecordMember
 }
